@@ -6,17 +6,15 @@ A Simple Lambda Interpreter.
 (Code imported from 2004-2005 -- by Rob Speer, Beracah Yancama and others.)
 """
 
-from copy import deepcopy
+import copy
 import dis, new, sys
 from opcode import *
-from types import CodeType, FunctionType
-
-from nltk.tree import Tree
 
 import cfg
-from lab3.utils import is_leaf_node, node_to_str_rule_repr, walk_tree
-from semantic_rule_set import SemanticRuleSet
+import types
 from category import C
+import nltk
+import utils
 
 ################################################################################
 
@@ -54,7 +52,7 @@ def getvars(code):
 
 
 def lambdastr(l):
-    if type(l) != FunctionType:
+    if type(l) != types.FunctionType:
         return repr(l)
     return codestr(l.func_code, cells=cells_by_name(l))
 
@@ -174,16 +172,16 @@ class Decompiler:
 				tos2 = stack.pop()
 				stack.append('%s[%s:%s]' % (tos2, tos1, tos))
 			elif name == 'LOAD_CONST':
-				if type(arg) == CodeType:
+				if type(arg) == types.CodeType:
 					stack.append(codestr(arg, self.cells))
 				else:
 					stack.append(repr(arg))
 			elif name == 'LOAD_DEREF':
 				if self.cells.has_key(arg):
 					cell = self.cells[arg]
-					if type(cell) == CodeType:
+					if type(cell) == types.CodeType:
 						stack.append(codestr(cell))
-					elif type(cell) == FunctionType:
+					elif type(cell) == types.FunctionType:
 						stack.append(lambdastr(cell))
 					else:
 						stack.append(repr(cell))
@@ -303,7 +301,7 @@ def evaluate_node(node, sem_rule_set):
     func = node.lambda_form
     args = []
     for child in node:
-        if is_leaf_node(child):
+        if utils.is_leaf_node(child):
             args.append(str(child))
         else:
             args.append(child.expr)
@@ -312,13 +310,13 @@ def evaluate_node(node, sem_rule_set):
 
 
 def eval_tree(tree, sem_rule_set, verbose=True):
-    assert isinstance(tree, Tree)
-    assert isinstance(sem_rule_set, SemanticRuleSet)
+    assert isinstance(tree, nltk.tree.Tree)
+    #assert isinstance(sem_rule_set, sem_rule_set.SemanticRuleSet)
     trace = []
-    tree = deepcopy(tree)
+    tree = copy.deepcopy(tree)
 
     def walk(node):
-        if is_leaf_node(node):
+        if utils.is_leaf_node(node):
             return None
 
         spanned_text = ' '.join([x for x, _ in node.pos()])
@@ -328,13 +326,13 @@ def eval_tree(tree, sem_rule_set, verbose=True):
         node.lambda_form = assign_lambda_form(node, sem_rule_set)
         if verbose:
             print ">> Evaluation Step %d."%(len(trace) + 1)
-            print "%10s: %s"%('Evaluating', node_to_str_rule_repr(node))
+            print "%10s: %s"%('Evaluating', utils.node_to_str_rule_repr(node))
             print "%10s: %s"%('Text', spanned_text)
             print "%10s: %s"%('Expression', lambdastr(node.lambda_form))
             print ""
         trace.append({'lambda_form': node.lambda_form,
                       'text': spanned_text,
-                      'tree': deepcopy(tree)})
+                      'tree': copy.deepcopy(tree)})
 
         # Visit children.
         for child in node:
@@ -344,7 +342,7 @@ def eval_tree(tree, sem_rule_set, verbose=True):
         node.expr = evaluate_node(node, sem_rule_set)
         if verbose:
             print "<< Evaluation Step %d."%(len(trace) + 1)
-            print "%10s: %s"%('Evaluated', node_to_str_rule_repr(node))
+            print "%10s: %s"%('Evaluated', utils.node_to_str_rule_repr(node))
             print "%10s: %s"%('Text', spanned_text)
 
             if is_function(node.expr):
@@ -354,7 +352,7 @@ def eval_tree(tree, sem_rule_set, verbose=True):
             print ""
         trace.append({'expr': node.expr,
                       'text': spanned_text,
-                      'tree': deepcopy(tree)})
+                      'tree': copy.deepcopy(tree)})
 
     walk(tree)
     return trace
@@ -376,5 +374,5 @@ def decorate_tree_with_trace(evaluated_tree, pretty_print_lambdas=True):
             else:
                 node.set_label(node.expr)
     
-    return walk_tree(deepcopy(evaluated_tree),
+    return utils.walk_tree(copy.deepcopy(evaluated_tree),
                      post_nonleaf_func=post_nonleaf_fn)

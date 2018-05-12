@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -11,40 +10,31 @@ from copy import deepcopy
 import argparse
 import readline
 import traceback
+import nltk
 
-from nltk.tree import Tree
-from nltk.draw.tree import TreeView
-
-import lab3
 import syntactic_and_semantic_rules
-from lab3.drawtree import TreeView as MultiTreeView
-from lab3.production_matcher import decorate_parse_tree
-from lab3.lambda_interpreter import eval_tree, decorate_tree_with_trace
-from lab3.semantic_rule_set import SemanticRuleSet
 
+import lambda_interpreter
+import production_matcher
 
 ##############################################################################
 
 
-def print_verbose(s):
-    if args.verbose:
-        print s
 
-
-def parse_input_str(input_str):
+def parse_input_str(input_str, verbose=False):
     trees = syntactic_and_semantic_rules.sem.parse_sentence(input_str)
     if len(trees) > 1:
-        print_verbose("[WARNING] Obtained %d parses; selecting the first one."%(len(trees)))
+        if verbose:
+            print("[WARNING] Obtained %d parses; selecting the first one."%(len(trees)))
     elif len(trees) == 0:
         raise Exception("Failed to parse the sentence: " + input_str)
     return trees[0]
 
 
-def handle_syntax_parser_mode(tree, sem_rule_set):
+def handle_syntax_parser_mode(tree, sem_rule_set, gui=False):
     print "Parse Tree: "
-    print tree
-    if args.gui:
-        TreeView(decorate_parse_tree(tree,
+    if gui:
+        nltk.draw.tree.TreeView(production_matcher.decorate_parse_tree(tree,
                                      sem_rule_set,
                                      set_productions_to_labels=True))
 
@@ -60,68 +50,13 @@ def display_trace_gui(GUI_decorated_tree, sem_rule_set):
     # Display the GUI of the trace through the evaluation.
     if args.gui:
         try:
-            trace_to_display = eval_tree(GUI_decorated_tree, sem_rule_set, verbose=False)
-            tv = MultiTreeView([decorate_tree_with_trace(entry['tree'])
+            trace_to_display = lambda_interpreter.eval_tree(GUI_decorated_tree, sem_rule_set, verbose=False)
+            tv = drawtree.TreeView([lambda_interpreter.decorate_tree_with_trace(entry['tree'])
                                 for entry in trace_to_display])
             tv.update()
             tv.showTree()
         except:
             traceback.print_exc()
-
-##############################################################################
-
-
-def run_sentences(args, sem_rule_set, batch_sentences, valid_output=[]):
-    assert isinstance(sem_rule_set, SemanticRuleSet)
-    output_validation_mode = len(valid_output) != 0
-
-    evaluation_history = []
-
-
-    for input_str in batch_sentences:
-        # Read in a sentence.
-        print '> '+input_str
-
-        # Parse the sentence.
-        output = None
-        try:
-            tree = parse_input_str(input_str)
-            if args['spm']:
-                handle_syntax_parser_mode(tree, sem_rule_set)
-                continue
-            else:
-                # Evaluate the parse tree.
-                decorated_tree = decorate_parse_tree(tree,
-                                                     sem_rule_set,
-                                                     set_productions_to_labels=False)
-                trace = eval_tree(decorated_tree,
-                                  sem_rule_set,
-                                  args['verbose'])
-                evaluation_history.append(deepcopy(trace))
-                output = trace[-1]['expr']
-
-                if args['gui']:
-                    display_trace_gui(decorate_parse_tree(deepcopy(tree),
-                                                          sem_rule_set,
-                                                          set_productions_to_labels=True),
-                                      sem_rule_set)
-
-        except Exception as e:
-            # The parser did not return any parse trees.
-            print_verbose("[WARNING] Could not parse input.")
-            #traceback.print_exc() # Uncomment this line while debugging.
-            output = "I don't understand."
-
-        # Print the result of the speech act
-        print output
-        
-        #if output_validation_mode:
-        #    validate_output(output, valid_output[0])
-        #    del valid_output[0]
-            
-        if args['show_database']:
-            syntactic_and_semantic_rules.sem.learned.print_knowledge()
-
 
 ##############################################################################
 
@@ -151,45 +86,58 @@ def run_sentences(args, sem_rule_set, batch_sentences, valid_output=[]):
 '''
 
 def load_sentences(batch_file='inputs.txt', gui=False, show_database=False, spm=False, validation_file=None, verbose=False):
-    print "> Loading the 6.863 Semantics REPL..."
-    
-    batch_sentences=[]
-    if batch_file != None:
-        try:
-            print "> Running in batch mode. Reading sentences from: " + batch_file
-            # Read in the list of sentences.        
-            with open(batch_file, 'r') as f_bm:
-                batch_sentences = [x.strip() for x in f_bm]
-        except IOError as e:
-            print "[ERROR] Could not open the file: %s"%(batch_file)
-            return
-    else:
-        print "> Hello. To exit this program, enter <cr> at the prompt below."
+    with open(batch_file, 'r') as f_bm:
+        batch_sentences = [x.strip() for x in f_bm]
 
-    # If validating output, read in the expected output.
-    valid_output = []
-    if validation_file != None:
-        if batch_file == None:
-            print "[ERROR] Must be in batch mode to validate output."
-            return
-        elif spm:
-            print "[ERROR] Cannot validate output in syntax parser mode."
-            return
-        try:
-            print "> Validating output against " + validation_file
-            with open(validation_file, 'r') as f_vo:
-                valid_output = [x.strip() for x in f_vo]
-                assert len(batch_sentences) == len(valid_output)
-        except IOError as e:
-            print "[ERROR] Could not open the file: %s"%(validation_file)
+    if validation_file:
+        print "> Validating output against " + validation_file
+        with open(validation_file, 'r') as f_vo:
+            valid_output = [x.strip() for x in f_vo]
+            assert len(batch_sentences) == len(valid_output)
 
-    #print(locals())
-    # Start the Semantics REPL.
-    run_sentences(locals(),
-                  syntactic_and_semantic_rules.sem,
-                  batch_sentences=batch_sentences,
-                  valid_output=valid_output)
+    sem_rule_set = syntactic_and_semantic_rules.sem
 
+    evaluation_history = []
 
+    for input_str in batch_sentences:
+        # Read in a sentence.
+        print '> '+input_str
+
+        #try:
+        tree = parse_input_str(input_str)
+        if spm:
+            handle_syntax_parser_mode(tree, sem_rule_set)
+        # Evaluate the parse tree.
+        decorated_tree = production_matcher.decorate_parse_tree(tree,
+                                             sem_rule_set,
+                                             set_productions_to_labels=False)
+        trace = lambda_interpreter.eval_tree(decorated_tree,
+                          sem_rule_set,
+                          verbose)
+        evaluation_history.append(deepcopy(trace))
+        output = trace[-1]['expr']
+
+        if gui:
+            display_trace_gui(production_matcher.decorate_parse_tree(deepcopy(tree),
+                                                  sem_rule_set,
+                                                  set_productions_to_labels=True),
+                              sem_rule_set)
+        """
+        except Exception as e:
+            # The parser did not return any parse trees.
+            if verbose: print("[WARNING] Could not parse input.")
+            #traceback.print_exc() # Uncomment this line while debugging.
+            output = "I don't understand."
+        """
+
+        # Print the result of the speech act
+        print output
+        
+        #if output_validation_mode:
+        #    validate_output(output, valid_output[0])
+        #    del valid_output[0]
+            
+        if show_database:
+            syntactic_and_semantic_rules.sem.learned.print_knowledge()
 
 

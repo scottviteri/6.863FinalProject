@@ -5,9 +5,9 @@ with the (implicit) productions extracted from the feature chart.
 
 from nltk.featstruct import Feature
 
-from category import Category
-from lab3.utils import is_leaf_node, walk_tree, node_to_str_repr
-from lambda_interpreter import lambdastr
+import category 
+from utils import is_leaf_node, walk_tree, node_to_str_repr
+import lambda_interpreter
 
 def match_terminal(terminal, term):
     if type(terminal) is str:
@@ -27,7 +27,7 @@ def match_nonterminal(nonterminal, term):
         if isinstance(k, Feature):
             if k.name == 'type':
                 # Check for matching categories
-                if isinstance(term, Category):
+                if isinstance(term, category.Category):
                     if term.head() != v:
                         return False
                 elif term['pos'] != v:
@@ -77,7 +77,7 @@ def match_nonterminal(nonterminal, term):
             if nonterm_slash == False:
                 return False
 
-    if not isinstance(term, Category):
+    if not isinstance(term, category.Category):
         term_features = filter(lambda k: k not in ('/', 'pos'),
                                term.keys())
         num_term_features = len(term_features)
@@ -134,7 +134,7 @@ def decorate_parse_tree(tree, sem_rule_set, set_productions_to_labels=False):
             if 1 < len(matching_rules):
                 # It's ok to match more than rule if they all map to the same
                 # lambda form.
-                set_of_rules = set([lambdastr(sem_rule_set.syn_sem_dict[rule])
+                set_of_rules = set([lambda_interpreter.lambdastr(sem_rule_set.syn_sem_dict[rule])
                                     for rule in matching_rules])
                 assert len(set_of_rules) == 1, set_of_rules
             

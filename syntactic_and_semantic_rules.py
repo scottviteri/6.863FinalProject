@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import lab3.cfg
-from lab3.category import Category, GrammarCategory, Variable, C, StarCategory
-from lab3.semantic_rule_set import SemanticRuleSet
-from lab3.semantic_db import pretty_print_entry
+import cfg
+import category
+import semantic_rule_set
+import semantic_db
 
 ####################################################################
 
@@ -17,7 +17,7 @@ def translateModifier(data):
 
 identity = lambda x: x
 
-sem = SemanticRuleSet()
+sem = semantic_rule_set.SemanticRuleSet()
 
 ####################################################################
 # Speech Actions
@@ -42,7 +42,7 @@ def whQuestion(data):
 
 
 def npOnlyHuhResponse(data):
-    return "What about %s?"%(pretty_print_entry(data))
+    return "What about %s?"%(semantic_db.pretty_print_entry(data))
 
 
 ####################################################################
@@ -113,8 +113,8 @@ sem.add_rule("AdvP[+wh] -> Adv[+wh]", identity)
 
 ####################################################################
 # AP
-sem.add_rule("APX -> APX AP", lambda apstar, ap: C(ap, mod=apstar))
-sem.add_rule("APX ->", lambda: StarCategory())
+sem.add_rule("APX -> APX AP", lambda apstar, ap: category.C(ap, mod=apstar))
+sem.add_rule("APX ->", lambda: category.StarCategory())
 sem.add_rule("AP -> A", identity)
 
 ####################################################################
@@ -128,7 +128,7 @@ sem.add_rule("VP -> Do_Modal VBAR[+fin]",
 
 sem.add_rule("V_args -> Be[+tense] V_part[form: V2]",
              lambda be, vpart: lambda subj:\
-                 be(vpart(Category.parse("Object"), subj)))
+                 be(vpart(category.Category.parse("Object"), subj)))
 
 sem.add_rule("V_args -> Be[+tense] V_part[form: V2] PP_by",
              lambda be, vpart, pp: lambda subj:\
@@ -251,18 +251,18 @@ sem.add_rule("PP_dat/NP -> P_dat NP/NP", lambda p, np: None)
 # Names
 sem.add_lexicon_rule("Name",
                      ['John', 'Mary', 'Fido', 'Poirot', 'Susan'],
-                     lambda name: C("Object", name=name))
+                     lambda name: category.C("Object", name=name))
 
 # Common nouns
 sem.add_lexicon_rule("N[-mass, number=singular]",
                      ['book', 'city', 'dog', 'man', 'park', 'woman', 'country'],
                      lambda word: lambda det, apstar:\
-                         C("Object", type=word, definite=det, mod=apstar))
+                         category.C("Object", type=word, definite=det, mod=apstar))
 
 sem.add_lexicon_rule("N[-mass, number=plural]",
                      ['books', 'cities', 'dogs', 'men', 'parks', 'women', 'countries'],
                      lambda word: lambda det, apstar:\
-                         C("Object", type=word, definite=det, mod=apstar))
+                         category.C("Object", type=word, definite=det, mod=apstar))
 
 # Determiners
 sem.add_lexicon_rule("Det",
@@ -276,18 +276,18 @@ sem.add_lexicon_rule("Det",
 # wh-words
 sem.add_lexicon_rule("NP[+pro, +wh]",
                      ['who', 'what'],
-                     lambda word: Variable(word))
+                     lambda word: category.Variable(word))
 
 sem.add_rule("Adv[+wh] -> 'where'",
              lambda word:\
-                 C('Adverb', type='locative', var=Variable("where")))
+                 category.C('Adverb', type='locative', var=category.Variable("where")))
 
 ####################################################################
 
-v1form = (GrammarCategory(pos="V1"),
+v1form = (category.GrammarCategory(pos="V1"),
    lambda root, tense:\
 		lambda word: lambda agent:\
-			C("Event", action=root, agent=agent, tense=tense))
+			category.C("Event", action=root, agent=agent, tense=tense))
 
 sem.add_verb(v1form, 'come', 'came', 'comes', 'come')
 sem.add_verb(v1form, 'drive', 'drove', 'drives', 'driven')
@@ -299,10 +299,10 @@ sem.add_verb(v1form, 'talk', 'talked', 'talks')
 
 ####################################################################
 
-v2form = (GrammarCategory(pos="V2"),
+v2form = (category.GrammarCategory(pos="V2"),
 	lambda root, tense:\
 		lambda word: lambda agent, patient:\
-			C("Event", action=root, agent=agent, patient=patient, tense=tense))
+			category.C("Event", action=root, agent=agent, patient=patient, tense=tense))
 
 sem.add_verb(v2form, 'eat', 'ate', 'eats', 'eaten')
 sem.add_verb(v2form, 'buy', 'bought', 'buys')
@@ -329,10 +329,10 @@ sem.add_verb(v2form, 'lose', 'lost', 'loses')
 
 ####################################################################
 
-v3form = (GrammarCategory(pos="V3"),
+v3form = (category.GrammarCategory(pos="V3"),
 	lambda root, tense:\
 		lambda word: lambda agent, beneficiary, patient:\
-			C("Event", action=root, agent=agent, patient=patient, beneficiary=beneficiary, tense=tense))
+			category.C("Event", action=root, agent=agent, patient=patient, beneficiary=beneficiary, tense=tense))
 
 sem.add_verb(v3form, 'give', 'gave', 'gives', 'given')
 
@@ -341,15 +341,15 @@ sem.add_verb(v3form, 'give', 'gave', 'gives', 'given')
 
 sem.add_rule("P[-loc] -> 'in'",
              lambda word: lambda location: lambda frame:\
-                 frame.addFeature("locative", C("Place", relation="in", location=location)))
+                 frame.addFeature("locative", category.C("Place", relation="in", location=location)))
 
 sem.add_rule("P[-loc] -> 'under'",
              lambda word: lambda location: lambda frame:\
-                 frame.addFeature("locative", C(None, relation="under", location=location)))
+                 frame.addFeature("locative", category.C(None, relation="under", location=location)))
 
 sem.add_rule("P[+loc] -> 'on'",
              lambda word: lambda location:\
-                 C("locative", C(None, relation="on", location=location)))
+                 category.C("locative", category.C(None, relation="on", location=location)))
 
 sem.add_rule("P[-loc] -> 'of'",
              lambda word: lambda source: lambda frame:\
@@ -367,12 +367,12 @@ sem.add_rule("P_by -> 'by'",
 
 sem.add_lexicon_rule("A",
                      ['rabid', 'raw', 'smart', 'red', 'blue'],
-                     lambda word: C(word))
+                     lambda word: category.C(word))
 
                      
 ## sem.add_rule("A_pred -> 'suspicious'",
 ##              lambda word: lambda source:\
-##                  C("suspicious", source=source))
+##                  category.C("suspicious", source=source))
 
 ####################################################################
 
@@ -407,7 +407,7 @@ sem.add_rule("Comp[+wh] -> 'whether'",
             lambda word: lambda: None)
 
 sem.add_rule("NP[-wh, +pro] -> 'somebody'",
-            lambda word: C("Object"))
+            lambda word: category.C("Object"))
 
 ##############################################################################
 
