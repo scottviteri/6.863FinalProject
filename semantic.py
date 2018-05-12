@@ -85,25 +85,33 @@ def display_trace_gui(GUI_decorated_tree, sem_rule_set):
                             help='check the specified input against expected output.')
 '''
 
-def load_sentences(batch_file='inputs.txt', gui=False, show_database=False, spm=False, validation_file=None, verbose=False):
-    with open(batch_file, 'r') as f_bm:
-        batch_sentences = [x.strip() for x in f_bm]
+#def load_sentences(batch_file='inputs.txt', gui=False, show_database=False, spm=False, validation_file=None, verbose=False):
 
-    if validation_file:
-        print "> Validating output against " + validation_file
-        with open(validation_file, 'r') as f_vo:
-            valid_output = [x.strip() for x in f_vo]
-            assert len(batch_sentences) == len(valid_output)
+batch_file = 'inputs.txt'
+gui = False
+show_database = False
+spm = False
+validation_file = None
+verbose = False
 
-    sem_rule_set = syntactic_and_semantic_rules.sem
+with open(batch_file, 'r') as f_bm:
+    batch_sentences = [x.strip() for x in f_bm]
 
-    evaluation_history = []
+if validation_file:
+    print "> Validating output against " + validation_file
+    with open(validation_file, 'r') as f_vo:
+        valid_output = [x.strip() for x in f_vo]
+        assert len(batch_sentences) == len(valid_output)
 
-    for input_str in batch_sentences:
-        # Read in a sentence.
-        print '> '+input_str
+sem_rule_set = syntactic_and_semantic_rules.sem
 
-        #try:
+evaluation_history = []
+
+for input_str in batch_sentences:
+    # Read in a sentence.
+    print '> '+input_str
+
+    try:
         tree = parse_input_str(input_str)
         if spm:
             handle_syntax_parser_mode(tree, sem_rule_set)
@@ -111,10 +119,12 @@ def load_sentences(batch_file='inputs.txt', gui=False, show_database=False, spm=
         decorated_tree = production_matcher.decorate_parse_tree(tree,
                                              sem_rule_set,
                                              set_productions_to_labels=False)
+
         trace = lambda_interpreter.eval_tree(decorated_tree,
-                          sem_rule_set,
-                          verbose)
+                                             sem_rule_set,
+                                             verbose)
         evaluation_history.append(deepcopy(trace))
+
         output = trace[-1]['expr']
 
         if gui:
@@ -122,22 +132,23 @@ def load_sentences(batch_file='inputs.txt', gui=False, show_database=False, spm=
                                                   sem_rule_set,
                                                   set_productions_to_labels=True),
                               sem_rule_set)
-        """
-        except Exception as e:
-            # The parser did not return any parse trees.
-            if verbose: print("[WARNING] Could not parse input.")
-            #traceback.print_exc() # Uncomment this line while debugging.
-            output = "I don't understand."
-        """
-
-        # Print the result of the speech act
-        print output
         
-        #if output_validation_mode:
-        #    validate_output(output, valid_output[0])
-        #    del valid_output[0]
-            
-        if show_database:
-            syntactic_and_semantic_rules.sem.learned.print_knowledge()
+    except Exception as e:
+        # The parser did not return any parse trees.
+        if verbose: print("[WARNING] Could not parse input.")
+        #traceback.print_exc() # Uncomment this line while debugging.
+        output = "I don't understand."
+    
 
+    # Print the result of the speech act
+    #print output
+    
+    #if output_validation_mode:
+    #    validate_output(output, valid_output[0])
+    #    del valid_output[0]
+        
+    if show_database:
+        syntactic_and_semantic_rules.sem.learned.print_knowledge()
 
+events = syntactic_and_semantic_rules.event_list
+print(events)

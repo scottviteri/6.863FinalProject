@@ -18,27 +18,35 @@ def translateModifier(data):
 identity = lambda x: x
 
 sem = semantic_rule_set.SemanticRuleSet()
+event_list = []
 
 ####################################################################
 # Speech Actions
 def processSentence(data):
-    sem.learned.add_fact(data)
+    #sem.learned.add_fact(data) #just using list of dicts for present purposes
+    event_list.append(data) 
     return "Okay."
 
 
 def ynQuestion(data):
+    print('add fact, not question')
+    """
     if sem.learned.yesno_query(data):
         return "Yes."
     else:
         return "No."
+    """
 
 
 def whQuestion(data):
+    print('add fact, not question')
+    """
     results = sem.learned.wh_query(data)
     if len(results) == 0:
         return "I don't know."
     else:
         return list(results)[0]
+    """
 
 
 def npOnlyHuhResponse(data):
