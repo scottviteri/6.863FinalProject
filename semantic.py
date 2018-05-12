@@ -15,8 +15,6 @@ import traceback
 from nltk.tree import Tree
 from nltk.draw.tree import TreeView
 
-import lab_rules
-from my_rules import add_my_rules
 import lab3
 from lab3.drawtree import TreeView as MultiTreeView
 from lab3.production_matcher import decorate_parse_tree
@@ -54,7 +52,7 @@ def read_sentence(batch_mode_sentences=None):
 
 
 def parse_input_str(input_str):
-    trees = lab_rules.sem.parse_sentence(input_str)
+    trees = syntactic_and_semantic_rules.sem.parse_sentence(input_str)
     if len(trees) > 1:
         print_verbose("[WARNING] Obtained %d parses; selecting the first one."%(len(trees)))
     elif len(trees) == 0:
@@ -153,7 +151,7 @@ def run_repl(sem_rule_set, batch_sentences=[], valid_output=[]):
             del valid_output[0]
             
         if args.show_database:
-            lab_rules.sem.learned.print_knowledge()
+            syntactic_and_semantic_rules.sem.learned.print_knowledge()
 
 
 ##############################################################################
@@ -224,11 +222,8 @@ def main():
         except IOError as e:
             print "[ERROR] Could not open the file: %s"%(args.validation_file)
 
-    import my_rules
-    my_rules.add_my_rules(lab_rules.sem)
-    
     # Start the Semantics REPL.
-    run_repl(lab_rules.sem,
+    run_repl(syntactic_and_semantic_rules.sem,
              batch_sentences=batch_sentences,
              valid_output=valid_output)
 
