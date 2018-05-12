@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/NixOS.org) (preloaded format=pdflatex 2018.4.26)  12 MAY 2018 14:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/NixOS.org) (preloaded format=pdflatex 2018.4.26)  12 MAY 2018 14:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**checkin.tex
-(./checkin.tex
+**proposal.tex
+(./proposal.tex
 LaTeX2e <2017-04-15>
 Babel <3.14> and hyphenation patterns for 87 language(s) loaded.
 
@@ -126,8 +126,9 @@ exmf/tex/latex/tools/indentfirst.sty
 Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
 )
 \c@problemx=\count99
- (./checkin.aux)
-\openout1 = `checkin.aux'.
+
+No file proposal.aux.
+\openout1 = `proposal.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
@@ -442,33 +443,33 @@ Overfull \hbox (2.74086pt too wide) in paragraph at lines 259--259
 catalog.ldc.upenn.edu/ldc99t42[] 
  []
 
-[6] (./checkin.aux) ) 
+[6] (./proposal.aux) ) 
 Here is how much of TeX's memory you used:
- 1239 strings out of 492936
- 15881 string characters out of 6108139
+ 1237 strings out of 492936
+ 15864 string characters out of 6108139
  72293 words of memory out of 5000000
  4822 multiletter control sequences out of 15000+600000
  10471 words of font info for 41 fonts, out of 8000000 for 9000
  1181 hyphenation exceptions out of 8191
- 27i,8n,26p,1067b,159s stack positions out of 5000i,500n,10000p,200000b,80000s
-</nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combi
-ned-full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></nix/store
-/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-full-2017/share/texmf/fonts/
-type1/public/amsfonts/cm/cmbx12.pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hv
-x-texlive-combined-full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmmi6.p
-fb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-full-2017/shar
-e/texmf/fonts/type1/public/amsfonts/cm/cmmi8.pfb></nix/store/5g0b787lcm1bam5xf1
-n9dm1vsf588hvx-texlive-combined-full-2017/share/texmf/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-f
-ull-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmr6.pfb></nix/store/5g0b78
-7lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-full-2017/share/texmf/fonts/type1/p
-ublic/amsfonts/cm/cmr7.pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive
--combined-full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmr8.pfb></nix/s
-tore/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-full-2017/share/texmf/fo
-nts/type1/public/amsfonts/cm/cmti10.pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf5
-88hvx-texlive-combined-full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmt
-t10.pfb>
-Output written on checkin.pdf (6 pages, 141600 bytes).
+ 27i,8n,26p,1068b,159s stack positions out of 5000i,500n,10000p,200000b,80000s
+</nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-comb
+ined-full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></nix/stor
+e/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-full-2017/share/texmf/fonts
+/type1/public/amsfonts/cm/cmbx12.pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf588h
+vx-texlive-combined-full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmmi6.
+pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-full-2017/sha
+re/texmf/fonts/type1/public/amsfonts/cm/cmmi8.pfb></nix/store/5g0b787lcm1bam5xf
+1n9dm1vsf588hvx-texlive-combined-full-2017/share/texmf/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-
+full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmr6.pfb></nix/store/5g0b7
+87lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-full-2017/share/texmf/fonts/type1/
+public/amsfonts/cm/cmr7.pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texliv
+e-combined-full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cmr8.pfb></nix/
+store/5g0b787lcm1bam5xf1n9dm1vsf588hvx-texlive-combined-full-2017/share/texmf/f
+onts/type1/public/amsfonts/cm/cmti10.pfb></nix/store/5g0b787lcm1bam5xf1n9dm1vsf
+588hvx-texlive-combined-full-2017/share/texmf/fonts/type1/public/amsfonts/cm/cm
+tt10.pfb>
+Output written on proposal.pdf (6 pages, 141600 bytes).
 PDF statistics:
  63 PDF objects out of 1000 (max. 8388607)
  44 compressed objects within 1 object stream
