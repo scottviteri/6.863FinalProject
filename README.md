@@ -1,8 +1,8 @@
 # 6.863J Semantics Framework.
 
-Requirements: NLTK v. 3.2.x
+Requirements in shell.nix
 
 To get started:
-
-```python semantic.py --help
+    nix-shell
+``` python semantic.py --help
 ```
