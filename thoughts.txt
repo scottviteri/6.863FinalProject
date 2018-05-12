@@ -1,0 +1,21 @@
+
+SemanticDatabase
+ add_fact
+ print_knowledge
+ yesno_query 
+ wh_query
+
+Longer term, make the check in lang query be from the database
+For testing just make a method 
+
+Use the provided lexicon as the possible words that can go in a slot
+
+Want training stage
+ python semantic.py <-- create db
+  just start with indicative sentences
+ play around with that db
+
+Actually do not want the REPL interface
+Just use input file
+
+
