@@ -150,5 +150,15 @@ for input_str in batch_sentences:
     if show_database:
         syntactic_and_semantic_rules.sem.learned.print_knowledge()
 
-events = syntactic_and_semantic_rules.event_list
+def eventToDictionary(event):
+    d = {}
+    for k in event.keys():
+        if type(event[k]) is str:
+            d[k] = event[k]
+        else:
+            d[k] = event[k].values()[-1]
+    return d
+
+event_list = syntactic_and_semantic_rules.event_list
+events = map(eventToDictionary, event_list)
 print(events)
