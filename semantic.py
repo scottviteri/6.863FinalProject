@@ -159,6 +159,20 @@ def eventToDictionary(event):
             d[k] = event[k].values()[-1]
     return d
 
+def makeGroupings(events): #making assumption that all fit in same grouping
+    grouping_dict = {}
+    for feature in events[0].keys():
+        grouping = set() 
+        for i in range(len(events)): 
+            for j in range(i+1,len(events)):
+                grouping.add(events[i][feature])
+                if all([events[i][k]==events[j][k] for k in events[0].keys() if k != feature]) and events[i][feature] != events[j][feature]:
+                    grouping.add(events[j][feature])
+        grouping_dict[feature] = grouping
+    return grouping_dict
+
 event_list = syntactic_and_semantic_rules.event_list
 events = map(eventToDictionary, event_list)
-print(events)
+#print(events)
+grouped_events = makeGroupings(events)
+print(grouped_events)
