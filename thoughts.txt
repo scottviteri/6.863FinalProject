@@ -18,4 +18,23 @@ Want training stage
 Actually do not want the REPL interface
 Just use input file
 
+Pomo 1: 10:55 - 11:20
+Goal: Get the first 1-diff pass working
 
+Printing hi
+ means not merged
+
+Too many print statements making difficult to interpret
+
+Going into not merged for each sentence
+Not adding after each
+Make so only one examples
+
+Currently not merging properly
+Got rid of extra semantic category feature
+Check if merged clause being entered now
+ was an ordering problem
+ Now merging properly
+
+Pomo 2: 11:20 - 11:45
+Goal: Group expansion via shared hypernymy

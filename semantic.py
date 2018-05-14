@@ -150,16 +150,7 @@ for input_str in batch_sentences:
     if show_database:
         syntactic_and_semantic_rules.sem.learned.print_knowledge()
 
-def eventToDictionary(event):
-    d = {}
-    for k in event.keys():
-        if type(event[k]) is str:
-            d[k] = event[k]
-        else:
-            d[k] = event[k].values()[-1]
-    return d
-
-def makeGroupings(events): #making assumption that all fit in same grouping
+def makeGroupingsOneOffBatch(events): #making assumption that all fit in same grouping
     grouping_dict = {}
     for feature in events[0].keys():
         grouping = set() 
@@ -169,10 +160,11 @@ def makeGroupings(events): #making assumption that all fit in same grouping
                 if all([events[i][k]==events[j][k] for k in events[0].keys() if k != feature]) and events[i][feature] != events[j][feature]:
                     grouping.add(events[j][feature])
         grouping_dict[feature] = grouping
-    return grouping_dict
+    return grouping_dict #this doesn't make sense -- do iteratively
 
-event_list = syntactic_and_semantic_rules.event_list
-events = map(eventToDictionary, event_list)
+#explore different types of grouping
+
+#print(syntactic_and_semantic_rules.event_list)
 #print(events)
-grouped_events = makeGroupings(events)
-print(grouped_events)
+#grouped_events = makeGroupingsOneOffBatch(events)
+#print(grouped_events)

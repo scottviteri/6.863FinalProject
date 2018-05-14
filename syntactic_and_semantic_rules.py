@@ -5,6 +5,8 @@ import category
 import semantic_rule_set
 import semantic_db
 
+import copy
+
 ####################################################################
 
 def translate(data):
@@ -23,13 +25,37 @@ event_list = []
 ####################################################################
 # Speech Actions
 def processSentence(data):
+    global event_list
     #sem.learned.add_fact(data) #just using list of dicts for present purposes
-    event_list.append(data) 
+    new_event = {k:data[k] for k in data.keys() if k != 'semantic type'}
+    event_list = groupEvent(event_list, new_event)
+    print(event_list)
     return "Okay."
 
 
+def groupEvent(event_list, new_event): #if different structure, do not match
+    new_event_list = copy.deepcopy(event_list)
+    merged = False
+    #try merging in
+    for i in range(len(event_list)): #try to match with event_list[i]
+        event = event_list[i]
+        if set(event.keys()) == set(new_event.keys()):
+            unequal_count = 0
+            for feat in event.keys():
+                if new_event[feat] not in event[feat]:
+                    unequal_feat = feat
+                    unequal_count += 1
+            if unequal_count == 1:
+                new_event_list[i][unequal_feat].add(new_event[unequal_feat])
+                merged = True
+    #make new spot
+    if not merged:
+        new_event_list.append({k:set([v]) for k,v in new_event.iteritems()})
+    return new_event_list
+
 def ynQuestion(data):
     print('add fact, not question')
+
     """
     if sem.learned.yesno_query(data):
         return "Yes."
@@ -259,18 +285,16 @@ sem.add_rule("PP_dat/NP -> P_dat NP/NP", lambda p, np: None)
 # Names
 sem.add_lexicon_rule("Name",
                      ['John', 'Mary', 'Fido', 'Poirot', 'Susan'],
-                     lambda name: category.C("Object", name=name))
+                     lambda name: name)
 
 # Common nouns
 sem.add_lexicon_rule("N[-mass, number=singular]",
                      ['book', 'city', 'dog', 'man', 'park', 'woman', 'country'],
-                     lambda word: lambda det, apstar:\
-                         category.C("Object", type=word, definite=det, mod=apstar))
+                     lambda word: lambda det, apstar: word)
 
 sem.add_lexicon_rule("N[-mass, number=plural]",
                      ['books', 'cities', 'dogs', 'men', 'parks', 'women', 'countries'],
-                     lambda word: lambda det, apstar:\
-                         category.C("Object", type=word, definite=det, mod=apstar))
+                     lambda word: lambda det, apstar: word)
 
 # Determiners
 sem.add_lexicon_rule("Det",
