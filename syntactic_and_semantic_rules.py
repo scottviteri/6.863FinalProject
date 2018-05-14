@@ -22,7 +22,7 @@ identity = lambda x: x
 ####################################################################
 # Speech Actions
 def processSentence(data):
-    print 'hi'
+    print 'if this prints, push to github'
     new_event = {k:data[k] for k in data.keys() if k != 'semantic type'}
     semantic.event_list = groupEvent(semantic.event_list, new_event)
     return 'ok' 
