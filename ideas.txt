@@ -1,0 +1,20 @@
+
+Pick the best parse tree using this same method that we are using for picking best fill-in-gap
+
+Expand single difference to weaker notion
+ 1 diff is very strong
+  Want to be able to learn that tense is not important
+  
+Grouping
+ Single diff
+ Single diff of important features
+ Compare across events with different features
+Generalization
+ Shared hypernymy
+ Whole underneath family
+ Synsets of everything
+
+what if we actually didn't rely on wordnet
+And used this system to iteratively to learn these relationships
+ scope too large 
+ use wordnet

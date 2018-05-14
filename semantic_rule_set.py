@@ -94,7 +94,8 @@ class SemanticRuleSet:
             # deduplicate trees, hashing by string value
             trees = {str(t):t for t in trees}.values()
             return trees
-        except:
+        except Exception as e:
+            print e
             return []
 
 

@@ -38,3 +38,119 @@ Check if merged clause being entered now
 
 Pomo 2: 11:20 - 11:45
 Goal: Group expansion via shared hypernymy
+
+Wait -- over-accepting
+Can check if entering not merged
+ it's not
+Wait this is the espective behavior in the iterative case
+This is actually a good thing
+
+What if the number of differences is actually 0
+ Already fine -- will add into set (making no change)
+
+how to get shared hypernymy and such?
+Look at lab3warmup
+
+Should I expand groupings iteratively
+ unsure
+ I think that might expand too rapidly
+
+So for now just do batch afterwards
+
+The goal is to use this to get word prediction
+So set up toy word prediction model
+
+John ate potatoes
+John ate tomatoes
+Mary ate tomatoes
+
+Predict
+Mary ate __ <-- should accept both potatoes and tomatoes
+
+since doing in batch do from semantic file
+how to do the input
+
+Do from a file the same way and guess words
+Can do validation on those
+ Note that to do validation we need way to pick best one
+ Before doing validation, have it output all valid words
+
+Out of time -- have left to take in testing, remove word, output matching words
+
+Pomo 3: 11:55 -> 12:20
+Goal: Pipeline + shared hypernymy
+
+Actually first re-fix namespacing
+
+Actually this project also gives a way to predict which parse to get
+ project has very much to do with a near-miss learning approach to learning language
+
+How to do without global event list
+ hold event object in semantic file
+
+Getting called through sem.parse_sentence
+ In method
+sem = semantic_rule_set.SemanticRuleSet()
+
+Figure out how to do dealing with the event_list global
+ So can do this directly
+ What to do with processSentence
+
+The way to make this all work without the global crap is by passing around the sem
+
+Do I need to output just the tree for event or the decorated tree
+tree and dec tree not printing
+ none being created
+Likely the lexicon is not being modified
+
+Why does add_rule set parser to be none
+construct_parser only run after adding all rules
+
+When ask to parse sentence, then it constructs the parser
+ So should not need to invoke manually
+
+when parsing, print production rules
+production rules are there
+getting exceptions in the parse
+Oh, because not potatoes in lexicon!
+
+Fixed but still no output
+
+Two issues 
+ 1. Not outputting anything from parse
+ 2. Not erroring on 0 trees -- excption not being raised
+     or at least being raised silently
+     maybe it is in a try loop
+       it is in a try loop, that is catching the exception
+
+Was able to force ValueError by removing the general Exception
+Was able to force regular exception by writing in the handling
+ saying that I am not intending on handling the exception
+
+Does not like the sentences 'John ate tomatoes'
+Does not like 'John ate cities'
+Must not be in grammar
+
+Either grammar issue or because I removed some categories
+But I'm doing that for name as well
+ so probably grammar
+
+In any event, just put 'the' in front and works
+
+tree and decorated tree look very similar
+How to get event structure from tree
+
+How do things get passed to processSentence
+Apparently decorated tree adds lambda forms
+
+How to go from lambda tree structure to event structures??
+
+must happen when tree is being evaluated
+processSentence not being run?
+Now maybe this is because lack of objects 
+
+Added back in objects, but same
+ not entering
+
+Try prinign gui back
+
