@@ -3,7 +3,6 @@
 import cfg
 import category
 import semantic_db
-import semantic 
 
 import copy
 
@@ -18,14 +17,15 @@ def translateModifier(data):
 ####################################################################
 
 identity = lambda x: x
+event_list = []
 
 ####################################################################
 # Speech Actions
 def processSentence(data):
-    print 'if this prints, push to github'
+    global event_list
     new_event = {k:data[k] for k in data.keys() if k != 'semantic type'}
-    semantic.event_list = groupEvent(semantic.event_list, new_event)
-    return 'ok' 
+    event_list = groupEvent(event_list, new_event)
+    return event_list
 
 
 def groupEvent(event_list, new_event): #if different structure, do not match
@@ -40,7 +40,6 @@ def groupEvent(event_list, new_event): #if different structure, do not match
                 if new_event[feat] not in event[feat]:
                     unequal_feat = feat
                     unequal_count += 1
-            print unequal_count
             if unequal_count <= 1: #merge into previous
                 new_event_list[i][unequal_feat].add(new_event[unequal_feat])
                 merged = True
@@ -282,12 +281,12 @@ def addLexicon(sem):
     # Names
     sem.add_lexicon_rule("Name",
                          ['John', 'Mary', 'Fido', 'Poirot', 'Susan'],
-                         lambda name: category.C("Object", name=name))
+                         lambda name: name)
 
     # Common nouns
     sem.add_lexicon_rule("N[-mass, number=singular]",
                          ['book', 'city', 'dog', 'man', 'park', 'woman', 'country','potato','tomato'],
-                         lambda word: lambda det, apstar: C("Object", type=word, definition=det, mod=apstart))
+                         lambda word: lambda det, apstar: word)
 
     sem.add_lexicon_rule("N[-mass, number=plural]",
                          ['books', 'cities', 'dogs', 'men', 'parks', 'women', 'countries','potatoes','tomatoes'],

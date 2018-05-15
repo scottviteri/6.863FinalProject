@@ -6,10 +6,11 @@
 This file holds the main method.
 """
 
-from copy import deepcopy
+import copy 
 import argparse
 import readline
 import traceback
+import drawtree
 
 import syntactic_and_semantic_rules
 import semantic_rule_set
@@ -37,8 +38,21 @@ def validate_output(actual_output, expected_output):
         print "[VALIDATION] FAILURE: '%s' does not match expected output: '%s'"%(actual_output, expected_output)
 
 
+def display_trace_gui(GUI_decorated_tree, sem_rule_set):
+    # Display the GUI of the trace through the evaluation.
+    if gui:
+        try:
+            trace_to_display = lambda_interpreter.eval_tree(GUI_decorated_tree, sem_rule_set, verbose=False)
+            tv = drawtree.TreeView([lambda_interpreter.decorate_tree_with_trace(entry['tree'])
+                                for entry in trace_to_display])
+            tv.update()
+            tv.showTree()
+        except:
+            traceback.print_exc()
+
+
+
 def parse(sem, sentences, training=True):
-    events = []
     for input_str in sentences:
         # Read in a sentence. -- how to control where processsent goes
         print '> '+input_str
@@ -49,7 +63,14 @@ def parse(sem, sentences, training=True):
             decorated_tree = production_matcher.decorate_parse_tree(tree,
                                                  sem,
                                                  set_productions_to_labels=False)
-            events.append(decorated_tree)
+
+            
+            trace = lambda_interpreter.eval_tree(decorated_tree,
+                                                 sem,
+                                                 verbose=False)
+            evaluation_history.append(copy.deepcopy(trace))
+            event_list = trace[-1]['expr']
+
 
         except Exception as e:
             # The parser did not return any parse trees.
@@ -58,6 +79,13 @@ def parse(sem, sentences, training=True):
         
         if show_database:
             sem.learned.print_knowledge()
+        if gui:
+            display_trace_gui(
+                production_matcher.decorate_parse_tree(copy.deepcopy(tree),
+                                    sem,
+                                    set_productions_to_labels=True),
+                              sem)
+
     return events
 
 def makeGroupingsOneOffBatch(events): 
@@ -77,6 +105,7 @@ training_sentences_file = 'training.txt'
 testing_sentences_file = 'testing.txt'
 show_database = False
 validate = False
+gui = False
 
 with open(training_sentences_file, 'r') as f:
     training_sentences = [x.strip() for x in f]
@@ -84,11 +113,10 @@ with open(testing_sentences_file, 'r') as f:
     testing_sentences = [x.strip() for x in f]
 
 
-event_list = []
 sem = semantic_rule_set.SemanticRuleSet()
-sem1 = syntactic_and_semantic_rules.addLexicon(sem)
-training_events = parse(sem1, training_sentences, training=True)
-#testing_events = parse(sem1, testing_sentences, training=False)
+sem = syntactic_and_semantic_rules.addLexicon(sem)
+training_events = parse(sem, training_sentences, training=True)
+#testing_events = parse(sem, testing_sentences, training=False)
  
 
 """
