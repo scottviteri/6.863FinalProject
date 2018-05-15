@@ -111,13 +111,17 @@ def checkGoodSentence(sem, sentence, event_list):
                 return True
     return False
     
+def getTerminals(sem):
+    rh_sides = map(lambda x: x.rhs(), sem.productions)
+    words = [rhs[0] for rhs in rh_sides if len(rhs) == 1 and type(rhs[0]) is str]
+    return words
 
 def test(sem, sentences, event_list):
     results = {}
+    guess_words = getTerminals(sem)
     for sentence in sentences:
         without_word =  sentence.split()[:-1]
         good_hypotheses = []
-        guess_words = ['potato','tomato','park']
         for guess_word in guess_words:
             guess_sentence = ' '.join(without_word + [guess_word])
             if checkGoodSentence(sem, guess_sentence, event_list): 
@@ -181,6 +185,7 @@ training_events = train(sem, training_sentences)
 testing_results = test(sem, testing_sentences, training_events)
 print "\n Testing"
 print testing_results 
+
 
 """
 if validate:

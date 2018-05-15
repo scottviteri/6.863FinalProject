@@ -167,4 +167,5 @@ Should I get rid of word from sentence and test all good words
  Try every word in lexicon
    <--
 
-
+2. all words in lexicon
+3. jupyter notebook
