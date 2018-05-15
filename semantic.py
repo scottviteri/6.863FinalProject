@@ -14,13 +14,19 @@ import drawtree
 
 import syntactic_and_semantic_rules
 import semantic_rule_set
+import semantic_db
 
 import lambda_interpreter
 import production_matcher
+import category 
+import cfg
 
 
 ##############################################################################
+# Rules
 
+
+##############################
 
 def parse_input_str(sem, input_str):
     trees = sem.parse_sentence(input_str)
@@ -51,14 +57,22 @@ def display_trace_gui(GUI_decorated_tree, sem_rule_set):
             traceback.print_exc()
 
 
+def processSentence(event_list, data):
+    new_event = {k:data[k] for k in data.keys() if k != 'semantic type'}
+    new_event_list = groupEvent(event_list, new_event)
+    return new_event_list
+
 
 def parse(sem, sentences, training=True):
+    event_list = []
     for input_str in sentences:
         # Read in a sentence. -- how to control where processsent goes
         print '> '+input_str
 
         try:
+
             tree = parse_input_str(sem, input_str)
+
             # Evaluate the parse tree.
             decorated_tree = production_matcher.decorate_parse_tree(tree,
                                                  sem,
@@ -68,9 +82,10 @@ def parse(sem, sentences, training=True):
             trace = lambda_interpreter.eval_tree(decorated_tree,
                                                  sem,
                                                  verbose=False)
-            evaluation_history.append(copy.deepcopy(trace))
-            event_list = trace[-1]['expr']
-
+            new_event = trace[-1]['expr']
+            new_event_dict = {k:new_event[k] for k in new_event.keys() if k != 'semantic type'}
+            event_list = groupEvent(event_list, new_event_dict)
+            print event_list 
 
         except Exception as e:
             # The parser did not return any parse trees.
@@ -86,7 +101,7 @@ def parse(sem, sentences, training=True):
                                     set_productions_to_labels=True),
                               sem)
 
-    return events
+    return event_list 
 
 def makeGroupingsOneOffBatch(events): 
     # Keep this around for comparison purposes
@@ -101,6 +116,28 @@ def makeGroupingsOneOffBatch(events):
         grouping_dict[feature] = grouping
     return grouping_dict 
 
+
+def groupEvent(event_list, new_event): #if different structure, do not match
+    new_event_list = copy.deepcopy(event_list)
+    merged = False
+    #try merging in
+    for i in range(len(event_list)): #try to match with event_list[i]
+        event = event_list[i]
+        if set(event.keys()) == set(new_event.keys()):
+            unequal_count = 0
+            for feat in event.keys():
+                if new_event[feat] not in event[feat]:
+                    unequal_feat = feat
+                    unequal_count += 1
+            if unequal_count <= 1: #merge into previous
+                new_event_list[i][unequal_feat].add(new_event[unequal_feat])
+                merged = True
+    #make new spot
+    if not merged:
+        new_event_list.append({k:set([v]) for k,v in new_event.iteritems()})
+    return new_event_list
+
+
 training_sentences_file = 'training.txt'
 testing_sentences_file = 'testing.txt'
 show_database = False
@@ -114,9 +151,10 @@ with open(testing_sentences_file, 'r') as f:
 
 
 sem = semantic_rule_set.SemanticRuleSet()
+
 sem = syntactic_and_semantic_rules.addLexicon(sem)
 training_events = parse(sem, training_sentences, training=True)
-#testing_events = parse(sem, testing_sentences, training=False)
+testing_events = parse(sem, testing_sentences, training=False)
  
 
 """

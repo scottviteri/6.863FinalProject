@@ -17,36 +17,9 @@ def translateModifier(data):
 ####################################################################
 
 identity = lambda x: x
-event_list = []
 
 ####################################################################
 # Speech Actions
-def processSentence(data):
-    global event_list
-    new_event = {k:data[k] for k in data.keys() if k != 'semantic type'}
-    event_list = groupEvent(event_list, new_event)
-    return event_list
-
-
-def groupEvent(event_list, new_event): #if different structure, do not match
-    new_event_list = copy.deepcopy(event_list)
-    merged = False
-    #try merging in
-    for i in range(len(event_list)): #try to match with event_list[i]
-        event = event_list[i]
-        if set(event.keys()) == set(new_event.keys()):
-            unequal_count = 0
-            for feat in event.keys():
-                if new_event[feat] not in event[feat]:
-                    unequal_feat = feat
-                    unequal_count += 1
-            if unequal_count <= 1: #merge into previous
-                new_event_list[i][unequal_feat].add(new_event[unequal_feat])
-                merged = True
-    #make new spot
-    if not merged:
-        new_event_list.append({k:set([v]) for k,v in new_event.iteritems()})
-    return new_event_list
 
 def ynQuestion(data):
     print('add fact, not question')
@@ -77,9 +50,7 @@ def npOnlyHuhResponse(data):
 def addLexicon(sem):
     ####################################################################
     # Start rules
-
-
-    sem.add_rule("Start -> S", lambda s: processSentence(s))
+    sem.add_rule("Start -> S", lambda s: s)
 
     # Declarative Sentence
     sem.add_rule("S -> NP[-wh] VP", lambda np, vp: vp(np)) 

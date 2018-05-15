@@ -71,8 +71,10 @@ class SemanticRuleSet:
             prod_rule = cleanup_production_rule(p)
             try:
                 g = grammar.FeatureGrammar.fromstring(prod_rule)
-            except:
+            except Exception as e:
                 print "ERROR: could not parse the rule:" + prod_rule
+                raise
+                
 
 
     def construct_feature_grammar(self):
@@ -96,7 +98,8 @@ class SemanticRuleSet:
             return trees
         except Exception as e:
             print e
-            return []
+            raise
+            #return []
 
 
     def add_verb(self, form, root, past, present, ppart=None):

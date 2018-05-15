@@ -152,5 +152,11 @@ Now maybe this is because lack of objects
 Added back in objects, but same
  not entering
 
-Try prinign gui back
+Try printing gui back
+Was able to fix, but had to put into global variable again
+Confusion comes from where to put processSentence
+
+Because if I put in the file, then cannot separate training and test data without a hack
+
+
 
