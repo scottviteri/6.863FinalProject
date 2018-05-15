@@ -168,5 +168,6 @@ Should I get rid of word from sentence and test all good words
    <--
 
 1. update readme <-- done
-2. all words in lexicon <-- done (maybe precompute)
+2. all words in lexicon <-- done (maybe precompute) not necessary to prec
+  much comp in checking all parses
 3. jupyter notebook
