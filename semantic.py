@@ -33,7 +33,8 @@ def parse_input_str(sem, input_str):
     if len(trees) > 1: #can pick the tree that is likely by the measure we are creating here 
         print("[WARNING] Obtained %d parses; selecting the first one."%(len(trees)))
     elif len(trees) == 0:
-        raise Exception("Failed to parse the sentence: " + input_str)
+        return []
+        #raise Exception("Failed to parse the sentence: " + input_str)
     return trees[0]
 
 
@@ -62,31 +63,30 @@ def processSentence(event_list, data):
     new_event_list = groupEvent(event_list, new_event)
     return new_event_list
 
+def sentenceToEventDict(sem, sentence):
+    tree = parse_input_str(sem, sentence)
+    if not tree: return None
+    # Evaluate the parse tree.
+    decorated_tree = production_matcher.decorate_parse_tree(tree,
+                                         sem,
+                                         set_productions_to_labels=False)
+    trace = lambda_interpreter.eval_tree(decorated_tree,
+                                         sem,
+                                         verbose=False)
+    new_event = trace[-1]['expr']
+    new_event_dict = {k:new_event[k] for k in new_event.keys() if k != 'semantic type'}
+    return new_event_dict
 
-def parse(sem, sentences, training=True):
+
+def train(sem, sentences):
     event_list = []
-    for input_str in sentences:
+    for sentence in sentences:
         # Read in a sentence. -- how to control where processsent goes
-        print '> '+input_str
+        print '> '+sentence
 
         try:
-
-            tree = parse_input_str(sem, input_str)
-
-            # Evaluate the parse tree.
-            decorated_tree = production_matcher.decorate_parse_tree(tree,
-                                                 sem,
-                                                 set_productions_to_labels=False)
-
-            
-            trace = lambda_interpreter.eval_tree(decorated_tree,
-                                                 sem,
-                                                 verbose=False)
-            new_event = trace[-1]['expr']
-            new_event_dict = {k:new_event[k] for k in new_event.keys() if k != 'semantic type'}
-            event_list = groupEvent(event_list, new_event_dict)
-            print event_list 
-
+           new_event_dict = sentenceToEventDict(sem, sentence)
+           event_list = groupEvent(event_list, new_event_dict)
         except Exception as e:
             # The parser did not return any parse trees.
             print e
@@ -96,12 +96,35 @@ def parse(sem, sentences, training=True):
             sem.learned.print_knowledge()
         if gui:
             display_trace_gui(
-                production_matcher.decorate_parse_tree(copy.deepcopy(tree),
+            production_matcher.decorate_parse_tree(copy.deepcopy(tree),
                                     sem,
                                     set_productions_to_labels=True),
                               sem)
-
     return event_list 
+
+def checkGoodSentence(sem, sentence, event_list):
+    event = sentenceToEventDict(sem, sentence)
+    if not event: return False
+    for event_group in event_list:
+        if set(event.keys()) == set(event_group.keys()):
+            if all([event[k] in event_group[k] for k in event.keys()]):
+                return True
+    return False
+    
+
+def test(sem, sentences, event_list):
+    results = {}
+    for sentence in sentences:
+        without_word =  sentence.split()[:-1]
+        good_hypotheses = []
+        guess_words = ['potato','tomato','park']
+        for guess_word in guess_words:
+            guess_sentence = ' '.join(without_word + [guess_word])
+            if checkGoodSentence(sem, guess_sentence, event_list): 
+                good_hypotheses.append(guess_sentence) 
+        results[sentence] = good_hypotheses
+    return results 
+        
 
 def makeGroupingsOneOffBatch(events): 
     # Keep this around for comparison purposes
@@ -153,9 +176,11 @@ with open(testing_sentences_file, 'r') as f:
 sem = semantic_rule_set.SemanticRuleSet()
 
 sem = syntactic_and_semantic_rules.addLexicon(sem)
-training_events = parse(sem, training_sentences, training=True)
-testing_events = parse(sem, testing_sentences, training=False)
- 
+print "\n Training"
+training_events = train(sem, training_sentences)
+testing_results = test(sem, testing_sentences, training_events)
+print "\n Testing"
+print testing_results 
 
 """
 if validate:

@@ -158,5 +158,13 @@ Confusion comes from where to put processSentence
 
 Because if I put in the file, then cannot separate training and test data without a hack
 
+Now need way to accept a parse
+Accept the parse if matches something in structure
+
+Should I get rid of word from sentence and test all good words
+ accept all good sentence hypotheses
+ -- yes, accept all
+ Try every word in lexicon
+   <--
 
 
