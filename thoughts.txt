@@ -167,5 +167,6 @@ Should I get rid of word from sentence and test all good words
  Try every word in lexicon
    <--
 
-2. all words in lexicon
+1. update readme <-- done
+2. all words in lexicon <-- done (maybe precompute)
 3. jupyter notebook

@@ -7,7 +7,9 @@ stdenv.mkDerivation rec {
     python27Packages.nltk    
     python27Packages.numpy
     python27Packages.tkinter
-    scheme48
+    python27Packages.jupyter
+    python27Packages.matplotlib
+    python27Packages.ipywidgets
   ];
 }
 

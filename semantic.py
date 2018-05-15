@@ -112,8 +112,8 @@ def checkGoodSentence(sem, sentence, event_list):
     return False
     
 def getTerminals(sem):
-    rh_sides = map(lambda x: x.rhs(), sem.productions)
-    words = [rhs[0] for rhs in rh_sides if len(rhs) == 1 and type(rhs[0]) is str]
+    rh_sides = filter(lambda x: len(x)==1, map(lambda x: x.rhs(), sem.productions))
+    words = filter(lambda x: type(x) is str, map(lambda y:y[0], rh_sides))
     return words
 
 def test(sem, sentences, event_list):
