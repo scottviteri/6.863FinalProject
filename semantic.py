@@ -60,7 +60,7 @@ def display_trace_gui(GUI_decorated_tree, sem_rule_set):
 
 def processSentence(event_list, data):
     new_event = {k:data[k] for k in data.keys() if k != 'semantic type'}
-    new_event_list = groupEvent(event_list, new_event)
+    new_event_list = groupEvent(event_list, new_event, event_grouping_strategy)
     return new_event_list
 
 def sentenceToEventDict(sem, sentence):
@@ -77,30 +77,30 @@ def sentenceToEventDict(sem, sentence):
     new_event_dict = {k:new_event[k] for k in new_event.keys() if k != 'semantic type'}
     return new_event_dict
 
-
-def train(sem, sentences):
+"""
+def train(sem, sentences, groupEvents):
     event_list = []
     for sentence in sentences:
-        # Read in a sentence. -- how to control where processsent goes
-        print '> '+sentence
-
         try:
            new_event_dict = sentenceToEventDict(sem, sentence)
-           event_list = groupEvent(event_list, new_event_dict)
+           event_list = groupEvents(event_list, new_event_dict)
         except Exception as e:
             # The parser did not return any parse trees.
-            print e
             raise
-        
-        if show_database:
-            sem.learned.print_knowledge()
-        if gui:
-            display_trace_gui(
-            production_matcher.decorate_parse_tree(copy.deepcopy(tree),
-                                    sem,
-                                    set_productions_to_labels=True),
-                              sem)
     return event_list 
+"""
+
+""" 
+    if show_database:
+        sem.learned.print_knowledge()
+    if gui:
+        display_trace_gui(
+        production_matcher.decorate_parse_tree(copy.deepcopy(tree),
+                                sem,
+                                set_productions_to_labels=True),
+                          sem)
+"""
+
 
 def checkGoodSentence(sem, sentence, event_list):
     event = sentenceToEventDict(sem, sentence)
@@ -144,10 +144,11 @@ def makeGroupingsOneOffBatch(events):
     return grouping_dict 
 
 
-def groupEvent(event_list, new_event): #if different structure, do not match
+"""
+def groupEvents(event_list, new_event): #if different structure, do not match
     new_event_list = copy.deepcopy(event_list)
     merged = False
-    #try merging in
+    #try merging into event_list
     for i in range(len(event_list)): #try to match with event_list[i]
         event = event_list[i]
         if set(event.keys()) == set(new_event.keys()):
@@ -159,12 +160,19 @@ def groupEvent(event_list, new_event): #if different structure, do not match
             if unequal_count <= 1: #merge into previous
                 new_event_list[i][unequal_feat].add(new_event[unequal_feat])
                 merged = True
-    #make new spot
+    #create new element of event_list
     if not merged:
         new_event_list.append({k:set([v]) for k,v in new_event.iteritems()})
     return new_event_list
 
 
+def oneDiffGroupings():
+    grouped_events = train(sem, training_sentences)
+    testing_results = test(sem, testing_sentences, grouped_events)
+    return testing_results
+"""
+
+"""
 training_sentences_file = 'training.txt'
 testing_sentences_file = 'testing.txt'
 show_database = False
@@ -176,16 +184,9 @@ with open(training_sentences_file, 'r') as f:
 with open(testing_sentences_file, 'r') as f:
     testing_sentences = [x.strip() for x in f]
 
-
 sem = semantic_rule_set.SemanticRuleSet()
-
 sem = syntactic_and_semantic_rules.addLexicon(sem)
-print "\n Training"
-training_events = train(sem, training_sentences)
-testing_results = test(sem, testing_sentences, training_events)
-print "\n Testing"
-print testing_results 
-
+"""
 
 """
 if validate:

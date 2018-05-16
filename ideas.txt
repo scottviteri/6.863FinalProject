@@ -1,4 +1,3 @@
-
 Pick the best parse tree using this same method that we are using for picking best fill-in-gap
 
 Expand single difference to weaker notion
@@ -18,3 +17,4 @@ what if we actually didn't rely on wordnet
 And used this system to iteratively to learn these relationships
  scope too large 
  use wordnet
+
