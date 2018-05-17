@@ -1,40 +1,14 @@
-Mary eats the tomato
+white_potato
 
-Mary eats the tomato
+murphy
 
-Mary eats the tomato
+tater
 
-Mary eats the tomato
+white_potato
 
-Mary consumes the tomato
+white_potato_vine
 
-Mary eats the tomato
+love_apple
 
-Mary depletes the tomato
-
-Mary exhausts the tomato
-
-Mary corrodes the tomato
-
-Mary eats the tomato
-
-Mary eats the tomato
-
-Mary eats the tomato
-
-Mary eats the tomato
-
-Mary eats the tomato
-
-Mary consumes the tomato
-
-Mary eats the tomato
-
-Mary depletes the tomato
-
-Mary exhausts the tomato
-
-Mary corrodes the tomato
-
-Mary eats the tomato
+tomato_plant
 

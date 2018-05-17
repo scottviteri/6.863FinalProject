@@ -12,7 +12,7 @@ import readline
 import traceback
 import drawtree
 
-import syntactic_and_semantic_rules
+import rules
 import semantic_rule_set
 import semantic_db
 
@@ -24,7 +24,6 @@ import cfg
 
 ##############################################################################
 # Rules
-
 
 ##############################
 
@@ -77,122 +76,4 @@ def sentenceToEventDict(sem, sentence):
     new_event_dict = {k:new_event[k] for k in new_event.keys() if k != 'semantic type'}
     return new_event_dict
 
-"""
-def train(sem, sentences, groupEvents):
-    event_list = []
-    for sentence in sentences:
-        try:
-           new_event_dict = sentenceToEventDict(sem, sentence)
-           event_list = groupEvents(event_list, new_event_dict)
-        except Exception as e:
-            # The parser did not return any parse trees.
-            raise
-    return event_list 
-"""
-
-""" 
-    if show_database:
-        sem.learned.print_knowledge()
-    if gui:
-        display_trace_gui(
-        production_matcher.decorate_parse_tree(copy.deepcopy(tree),
-                                sem,
-                                set_productions_to_labels=True),
-                          sem)
-"""
-
-
-def checkGoodSentence(sem, sentence, event_list):
-    event = sentenceToEventDict(sem, sentence)
-    if not event: return False
-    for event_group in event_list:
-        if set(event.keys()) == set(event_group.keys()):
-            if all([event[k] in event_group[k] for k in event.keys()]):
-                return True
-    return False
-    
-def getTerminals(sem):
-    rh_sides = filter(lambda x: len(x)==1, map(lambda x: x.rhs(), sem.productions))
-    words = filter(lambda x: type(x) is str, map(lambda y:y[0], rh_sides))
-    return words
-
-def test(sem, sentences, event_list):
-    results = {}
-    guess_words = getTerminals(sem)
-    for sentence in sentences:
-        without_word =  sentence.split()[:-1]
-        good_hypotheses = []
-        for guess_word in guess_words:
-            guess_sentence = ' '.join(without_word + [guess_word])
-            if checkGoodSentence(sem, guess_sentence, event_list): 
-                good_hypotheses.append(guess_sentence) 
-        results[sentence] = good_hypotheses
-    return results 
-        
-
-def makeGroupingsOneOffBatch(events): 
-    # Keep this around for comparison purposes
-    grouping_dict = {}
-    for feature in events[0].keys():
-        grouping = set() 
-        for i in range(len(events)): 
-            for j in range(i+1,len(events)):
-                grouping.add(events[i][feature])
-                if all([events[i][k]==events[j][k] for k in events[0].keys() if k != feature]) and events[i][feature] != events[j][feature]:
-                    grouping.add(events[j][feature])
-        grouping_dict[feature] = grouping
-    return grouping_dict 
-
-
-"""
-def groupEvents(event_list, new_event): #if different structure, do not match
-    new_event_list = copy.deepcopy(event_list)
-    merged = False
-    #try merging into event_list
-    for i in range(len(event_list)): #try to match with event_list[i]
-        event = event_list[i]
-        if set(event.keys()) == set(new_event.keys()):
-            unequal_count = 0
-            for feat in event.keys():
-                if new_event[feat] not in event[feat]:
-                    unequal_feat = feat
-                    unequal_count += 1
-            if unequal_count <= 1: #merge into previous
-                new_event_list[i][unequal_feat].add(new_event[unequal_feat])
-                merged = True
-    #create new element of event_list
-    if not merged:
-        new_event_list.append({k:set([v]) for k,v in new_event.iteritems()})
-    return new_event_list
-
-
-def oneDiffGroupings():
-    grouped_events = train(sem, training_sentences)
-    testing_results = test(sem, testing_sentences, grouped_events)
-    return testing_results
-"""
-
-"""
-training_sentences_file = 'training.txt'
-testing_sentences_file = 'testing.txt'
-show_database = False
-validate = False
-gui = False
-
-with open(training_sentences_file, 'r') as f:
-    training_sentences = [x.strip() for x in f]
-with open(testing_sentences_file, 'r') as f:
-    testing_sentences = [x.strip() for x in f]
-
-sem = semantic_rule_set.SemanticRuleSet()
-sem = syntactic_and_semantic_rules.addLexicon(sem)
-"""
-
-"""
-if validate:
-    print "> Validating predicted words"
-    with open(testing_sentences_file, 'r') as f_vo:
-        valid_output = [x.strip() for x in f_vo]
-        assert len(training_sentences) == len(valid_output)
-"""
 

@@ -1,5 +1,5 @@
 """
-Utility functions for matching the productions from syntactic_and_semantic_rules
+Utility functions for matching the productions from rules
 with the (implicit) productions extracted from the feature chart.
 """
 
