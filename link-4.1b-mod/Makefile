@@ -47,12 +47,6 @@ ${OBJ}/count.o ${OBJ}/build-disjuncts.o ${OBJ}/constituents.o\
 ${OBJ}/print-util.o 
 
 
-${BIN}/run_parser: ${OBJECTS} ${OBJ}/run_parser.o
-		${CC} ${CLDFLAGS} ${OBJECTS} -o ${BIN}/run_parser 
-
-${OBJ}/run_parser.o: ${SRC}/run_parser.c ${INCLUDES} ${INC}/command-line.h
-		${CC} ${CFLAGS} -I${INC} ${SRC}/run_parser.c -o ${OBJ}/run_parser.o
-
 
 ${BIN}/parse: ${OBJECTS}
 		${CC} ${CLDFLAGS} ${OBJECTS} -o ${BIN}/parse 

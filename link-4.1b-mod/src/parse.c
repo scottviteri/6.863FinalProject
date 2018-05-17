@@ -102,8 +102,8 @@ int main(int argc, char * argv[]) {
     opts  = parse_options_create();
     dict  = dictionary_create("4.0.dict", "4.0.knowledge", NULL, "4.0.affix");
 
-    FILE *in = fopen("input.txt","r");
-    FILE *out = fopen("output.txt","w+");
+    FILE *in = fopen("./input.txt","r");
+    FILE *out = fopen("./output.txt","w+");
     char buff[255];
 
     while ( fgets ( buff, sizeof buff, in ) != NULL ) {
