@@ -76,4 +76,10 @@ def sentenceToEventDict(sem, sentence):
     new_event_dict = {k:new_event[k] for k in new_event.keys() if k != 'semantic type'}
     return new_event_dict
 
+def getTerminals(sem):
+    rh_sides = filter(lambda x: len(x)==1, map(lambda x: x.rhs(), sem.productions))
+    words = filter(lambda x: type(x) is str, map(lambda y:y[0], rh_sides))
+    return words
+
+
 
