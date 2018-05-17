@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
     python27Packages.matplotlib
     python27Packages.ipywidgets
     pandoc
+    texlive.combined.scheme-full
   ];
 }
 

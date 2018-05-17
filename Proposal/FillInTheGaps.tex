@@ -1029,7 +1029,7 @@ to automate the conjugation/modification of our generated sentences.
 of our synonyms!
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}23}]:} \PY{k}{def} \PY{n+nf}{findPOS}\PY{p}{(}\PY{n}{features}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}49}]:} \PY{k}{def} \PY{n+nf}{findPOS}\PY{p}{(}\PY{n}{features}\PY{p}{)}\PY{p}{:}
              \PY{n}{feat\PYZus{}keys} \PY{o}{=} \PY{n}{features}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
              \PY{n}{feat\PYZus{}type\PYZus{}index} \PY{o}{=} \PY{n+nb}{filter}\PY{p}{(}\PY{k}{lambda} \PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{:} \PY{n+nb}{type}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o+ow}{is} \PY{n}{nltk}\PY{o}{.}\PY{n}{featstruct}\PY{o}{.}\PY{n}{Feature}\PY{p}{,} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{feat\PYZus{}keys}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
              \PY{n}{feat\PYZus{}type} \PY{o}{=} \PY{n}{feat\PYZus{}keys}\PY{p}{[}\PY{n}{feat\PYZus{}type\PYZus{}index}\PY{p}{]}
@@ -1081,7 +1081,7 @@ of our synonyms!
              \PY{k}{return} \PY{n}{POS\PYZus{}info}
                  
          \PY{c+c1}{\PYZsh{}conjugate needs all info, but generalize should only need one POS}
-         \PY{k}{def} \PY{n+nf}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{generalizationProcedure}\PY{p}{)}\PY{p}{:} 
+         \PY{k}{def} \PY{n+nf}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{generalizationProcedure}\PY{p}{,} \PY{n}{filtering}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}\PY{p}{:} 
              \PY{n}{POS\PYZus{}info} \PY{o}{=} \PY{n}{fillerWordToPOSInfo}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{)}
              
              \PY{n}{generalizations} \PY{o}{=} \PY{n}{generalizationProcedure}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{POS\PYZus{}info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
@@ -1090,27 +1090,31 @@ of our synonyms!
                  \PY{k}{try}\PY{p}{:}
                      \PY{n}{conjugated\PYZus{}gens}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{conjugate}\PY{p}{(}\PY{n}{g}\PY{p}{,} \PY{n}{POS\PYZus{}info}\PY{p}{)}\PY{p}{)}
                  \PY{k}{except} \PY{n+ne}{Exception} \PY{k}{as} \PY{n}{e}\PY{p}{:} \PY{k}{pass}
-             \PY{k}{return} \PY{n}{filterBySyntax}\PY{p}{(}\PY{n}{conjugated\PYZus{}gens}\PY{p}{)}
+             \PY{k}{if} \PY{n}{filtering}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{filterBySyntax}\PY{p}{(}\PY{n}{conjugated\PYZus{}gens}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:} 
+                 \PY{k}{return} \PY{n}{conjugated\PYZus{}gens}
          
-         \PY{n}{gap\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary \PYZus{} the tomato}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary eats the \PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{c+c1}{\PYZsh{}, \PYZsq{}\PYZus{} eats the tomato\PYZsq{}]}
-         \PY{k}{for} \PY{n}{gap\PYZus{}sentence} \PY{o+ow}{in} \PY{n}{gap\PYZus{}sentences}\PY{p}{:}
-             \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
-             \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSynonyms}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}gap\PYZus{}sentences = [\PYZsq{}Mary \PYZus{} the tomato\PYZsq{}, \PYZsq{}Mary eats the \PYZus{}\PYZsq{}]\PYZsh{}, \PYZsq{}\PYZus{} eats the tomato\PYZsq{}]}
+         \PY{c+c1}{\PYZsh{}word\PYZus{}guesses = map(lambda gap\PYZus{}sentence: gapSentenceToFillerWordGuesses(sem, gap\PYZus{}sentence, event\PYZus{}groupings), gap\PYZus{}sentences)}
+         \PY{c+c1}{\PYZsh{}sents\PYZus{}and\PYZus{}guesses = zip(gap\PYZus{}sentences,word\PYZus{}guesses)}
+         
+         \PY{k}{for} \PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{)} \PY{o+ow}{in} \PY{n}{sents\PYZus{}and\PYZus{}guesses}\PY{p}{:}
+             \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSynonyms}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{)}
              \PY{k}{print} \PY{n}{gens}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-[]
-['white\_potato', 'murphy', 'tater', 'white\_potato', 'white\_potato\_vine', 'love\_apple', 'tomato\_plant']
+['eats', 'eats', 'fees', 'eats', 'eats', 'consumes', 'eats', 'depletes', 'exhausts', 'corrodes', 'eats', 'rusts', 'eats', 'eats', 'fees', 'eats', 'eats', 'consumes', 'eats', 'depletes', 'exhausts', 'corrodes', 'eats', 'rusts']
+[u'potato', u'white\_potato', u'Irish\_potato', u'murphy', u'spud', u'tater', u'potato', u'white\_potato', u'white\_potato\_vine', u'Solanum\_tuberosum', u'tomato', u'tomato', u'love\_apple', u'tomato\_plant', u'Lycopersicon\_esculentum']
 
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{filled\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-         \PY{k}{for} \PY{n}{gap\PYZus{}sentence} \PY{o+ow}{in} \PY{n}{gap\PYZus{}sentences}\PY{p}{:}
-             \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
-             \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSynonyms}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n}{filled\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{)} \PY{o+ow}{in} \PY{n}{sents\PYZus{}and\PYZus{}guesses}\PY{p}{:}
+             \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSynonyms}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{)}
              \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{gens}\PY{p}{:}
                  \PY{n}{filled\PYZus{}sentences}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{)}
              \PY{k}{for} \PY{n}{fill} \PY{o+ow}{in} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{:}
@@ -1125,16 +1129,48 @@ of our synonyms!
     \begin{Verbatim}[commandchars=\\\{\}]
 Mary eats the tomato
 Mary eats the tomato
+Mary fees the tomato
+Mary eats the tomato
+Mary eats the tomato
+Mary consumes the tomato
+Mary eats the tomato
+Mary depletes the tomato
+Mary exhausts the tomato
+Mary corrodes the tomato
+Mary eats the tomato
+Mary rusts the tomato
+Mary eats the tomato
+Mary eats the tomato
+Mary fees the tomato
+Mary eats the tomato
+Mary eats the tomato
+Mary consumes the tomato
+Mary eats the tomato
+Mary depletes the tomato
+Mary exhausts the tomato
+Mary corrodes the tomato
+Mary eats the tomato
+Mary rusts the tomato
+Mary eats the tomato
+Mary eats the tomato
+Mary eats the potato
 Mary eats the white\_potato
+Mary eats the Irish\_potato
 Mary eats the murphy
+Mary eats the spud
 Mary eats the tater
+Mary eats the potato
 Mary eats the white\_potato
 Mary eats the white\_potato\_vine
+Mary eats the Solanum\_tuberosum
+Mary eats the tomato
+Mary eats the tomato
 Mary eats the love\_apple
 Mary eats the tomato\_plant
+Mary eats the Lycopersicon\_esculentum
 Mary eats the potato
 Mary eats the tomato
-Count:  11 
+Count:  43 
 
 
     \end{Verbatim}
@@ -1144,12 +1180,12 @@ we are more free to experiment with different generalization techniques.
 
 For example, what if we notice that the is something in common to many
 of the suggestions, whether they be tomato or potato? Fundamentally,
-``Mary ate the \_'' should semantically match any food item.
+``Mary eats the \_'' should semantically match any food item.
 
 Following this idea, we introduce generalization by shared hypernymy.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}25}]:} \PY{k}{def} \PY{n+nf}{getSharedHypernyms}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}only use on Nouns}
+{\color{incolor}In [{\color{incolor}51}]:} \PY{k}{def} \PY{n+nf}{getSharedHypernyms}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}only use on Nouns}
              \PY{n}{pairwise\PYZus{}synsets} \PY{o}{=} \PY{p}{[}\PY{p}{]}
              \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}\PY{p}{:}
                  \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}\PY{p}{:}
@@ -1160,8 +1196,8 @@ Following this idea, we introduce generalization by shared hypernymy.
          \PY{k}{def} \PY{n+nf}{getEntailments}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}only use on Verbs}
              \PY{n}{synsets} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{p}{[}\PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{filler\PYZus{}word}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{VERB}\PY{p}{)} \PY{k}{for} \PY{n}{filler\PYZus{}word} \PY{o+ow}{in} \PY{n}{filler\PYZus{}words}\PY{p}{]}\PY{p}{)}
              \PY{n}{ents} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{syn}\PY{p}{:} \PY{n}{syn}\PY{o}{.}\PY{n}{entailments}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{synsets}\PY{p}{)}\PY{p}{)}
-             \PY{k}{return} \PY{n}{flatten}\PY{p}{(}\PY{p}{[}\PY{n}{ent}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{ent} \PY{o+ow}{in} \PY{n}{ents}\PY{p}{]}\PY{p}{)}
-         
+             \PY{k}{return} \PY{n}{flatten}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{ents}\PY{p}{]}\PY{p}{)}
+             
          \PY{k}{def} \PY{n+nf}{getSharedHypernymsOrEntailments}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{POS}\PY{p}{)}\PY{p}{:}
              \PY{k}{if} \PY{n}{POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
                  \PY{k}{return} \PY{n}{getSharedHypernyms}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}
@@ -1185,20 +1221,19 @@ Following this idea, we introduce generalization by shared hypernymy.
                                          \PY{n}{curr\PYZus{}x}\PY{p}{,} \PY{n}{curr\PYZus{}y} \PY{o}{=} \PY{n}{x}\PY{p}{,} \PY{n}{y}
              \PY{k}{return} \PY{n}{low\PYZus{}synset}
          
-         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary eats the \PYZus{}}\PY{l+s+s1}{\PYZsq{}}
-         \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
-         \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSharedHypernymsOrEntailments}\PY{p}{)}
          
-         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary \PYZus{} the tomato}\PY{l+s+s1}{\PYZsq{}}
-         \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
-         \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSharedHypernymsOrEntailments}\PY{p}{)}
+         \PY{k}{for} \PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{)} \PY{o+ow}{in} \PY{n}{sents\PYZus{}and\PYZus{}guesses}\PY{p}{:}
+             \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSharedHypernymsOrEntailments}\PY{p}{)}
+             \PY{k}{print} \PY{n}{gens}
 \end{Verbatim}
 
 
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}25}]:} []
-\end{Verbatim}
-            
+    \begin{Verbatim}[commandchars=\\\{\}]
+['chews', 'masticates', 'manducates', 'jaws', 'swallows', 'chews', 'masticates', 'manducates', 'jaws', 'swallows']
+[u'vascular\_plant', u'tracheophyte']
+
+    \end{Verbatim}
+
     These generalizations are good, but do not cover very much ground. We
 are trying to create a long list of viable alternatively for a blank
 spot, and this method took us from two hypotheses to two hypotheses. We
@@ -1207,7 +1242,7 @@ these objects. Such a closure would be a generalization of each of our
 previous generalizations in this paper.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}26}]:} \PY{k}{def} \PY{n+nf}{getHyponymClosure}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}Noun}
+{\color{incolor}In [{\color{incolor}52}]:} \PY{k}{def} \PY{n+nf}{getHyponymClosure}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}Noun}
              \PY{n}{pairwise\PYZus{}synsets} \PY{o}{=} \PY{p}{[}\PY{p}{]}
              \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}\PY{p}{:}
                  \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}\PY{p}{:}
@@ -1224,21 +1259,15 @@ previous generalizations in this paper.
                  \PY{k}{return} \PY{n}{getEntailments}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}
              \PY{k}{return} \PY{n}{getHyponymClosure}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)} \PY{c+c1}{\PYZsh{}future work}
          
-         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary eats the \PYZus{}}\PY{l+s+s1}{\PYZsq{}}
-         \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
-         \PY{n}{hyponym\PYZus{}closure} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getHyponymsClosureOrEntailments}\PY{p}{)}
-         \PY{k}{print} \PY{n}{hyponym\PYZus{}closure}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
-         
-         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary \PYZus{} the tomato}\PY{l+s+s1}{\PYZsq{}}
-         \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
-         \PY{n}{hyponym\PYZus{}closure} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getHyponymsClosureOrEntailments}\PY{p}{)}
-         \PY{k}{print} \PY{n}{hyponym\PYZus{}closure}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+         \PY{k}{for} \PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{)} \PY{o+ow}{in} \PY{n}{sents\PYZus{}and\PYZus{}guesses}\PY{p}{:}
+             \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getHyponymsClosureOrEntailments}\PY{p}{)}
+             \PY{k}{print} \PY{n}{gens}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-['aquatic\_plant', 'water\_plant', 'hydrophyte', 'hydrophytic\_plant', 'bulbous\_plant', 'cormous\_plant', 'cultivar', 'cultivated\_plant', 'deciduous\_plant', 'desert\_plant']
-[]
+['chews', 'masticates', 'manducates', 'jaws', 'swallows', 'chews', 'masticates', 'manducates', 'jaws', 'swallows']
+[u'aquatic\_plant', u'water\_plant', u'hydrophyte', u'hydrophytic\_plant', u'bulbous\_plant', u'cormous\_plant', u'creeper', u'cultivar', u'cultivated\_plant', u'deciduous\_plant']
 
     \end{Verbatim}
 
@@ -1248,11 +1277,11 @@ are no hypernyms. We may choose to be selective -- using hyponym closure
 for nouns and entailment for verbs.
 
 We can fill the currently unused word\_type argument of
-getHyponymClosure to implement differening generalization behavior based
+getHyponymClosure to implement differing generalization behavior based
 on the type of word.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{training\PYZus{}sentences\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input/training.txt}\PY{l+s+s1}{\PYZsq{}}
+{\color{incolor}In [{\color{incolor}53}]:} \PY{n}{training\PYZus{}sentences\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input/training.txt}\PY{l+s+s1}{\PYZsq{}}
          \PY{n}{gap\PYZus{}sentences\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input/testing.txt}\PY{l+s+s1}{\PYZsq{}}
          \PY{n}{output\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Output/}\PY{l+s+s1}{\PYZsq{}}
          
@@ -1271,6 +1300,7 @@ on the type of word.
                  \PY{k}{for} \PY{n}{gap\PYZus{}sentence} \PY{o+ow}{in} \PY{n}{gap\PYZus{}sentences}\PY{p}{:}
                      \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
                      \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{generalizationProcedure}\PY{p}{)}
+                     \PY{k}{print} \PY{n}{gens}
                      \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{gens}\PY{p}{:}
                          \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{g}\PY{p}{)}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          
@@ -1281,10 +1311,11 @@ on the type of word.
 \end{Verbatim}
 
 
-    Looking forward: 1. Grouping procedures that use synsets during the
+    Thanks for reading!
+
+Future Work: 1. Grouping procedures that use synsets during the
 iterative grouping. 2. Grouping procedures that only group according to
-n/log(n) rule 3. Extending supported parts of speech 4. Make faster --
-currently very inefficient
+n/log(n) human learning rule 3. Extending supported parts of speech
 
     Assumptions/Limitations: 1. Can currently only replace nouns or verbs
 
