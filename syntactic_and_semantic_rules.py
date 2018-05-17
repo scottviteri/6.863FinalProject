@@ -22,7 +22,8 @@ identity = lambda x: x
 # Speech Actions
 
 def ynQuestion(data):
-    print('add fact, not question')
+    #print('add fact, not question')
+    pass
 
     """
     if sem.learned.yesno_query(data):
@@ -33,7 +34,8 @@ def ynQuestion(data):
 
 
 def whQuestion(data):
-    print('add fact, not question')
+    #print('add fact, not question')
+    pass
     """
     results = sem.learned.wh_query(data)
     if len(results) == 0:
