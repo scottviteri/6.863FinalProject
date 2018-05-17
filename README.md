@@ -4,5 +4,5 @@ Requirements in shell.nix
 
 To get started:
 ``` nix-shell
-``` jupyter-notebook
+``` jupyter-notebook FillInTheGaps.ipynb
 
