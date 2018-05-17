@@ -1,0 +1,1296 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{FillInTheGaps}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{subprocess}
+        \PY{k+kn}{import} \PY{n+nn}{os}
+        \PY{k+kn}{import} \PY{n+nn}{copy}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        
+        \PY{k+kn}{import} \PY{n+nn}{semantic} \PY{k+kn}{as} \PY{n+nn}{s}
+        \PY{k+kn}{import} \PY{n+nn}{semantic\PYZus{}rule\PYZus{}set}
+        \PY{k+kn}{import} \PY{n+nn}{rules}
+        
+        \PY{k+kn}{import} \PY{n+nn}{en}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{}setup}
+        \PY{n}{training\PYZus{}sentences\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input/training.txt}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{gap\PYZus{}sentences\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input/testing.txt}\PY{l+s+s1}{\PYZsq{}}
+        
+        \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{training\PYZus{}sentences\PYZus{}file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+            \PY{n}{training\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{f}\PY{p}{]}
+        \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{gap\PYZus{}sentences\PYZus{}file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+            \PY{n}{gap\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{f}\PY{p}{]}
+        
+        \PY{n}{sem} \PY{o}{=} \PY{n}{semantic\PYZus{}rule\PYZus{}set}\PY{o}{.}\PY{n}{SemanticRuleSet}\PY{p}{(}\PY{p}{)}
+        \PY{n}{sem} \PY{o}{=} \PY{n}{rules}\PY{o}{.}\PY{n}{addLexicon}\PY{p}{(}\PY{n}{sem}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{predicting-the-missing-word}{%
+\subsubsection{Predicting the missing
+word}\label{predicting-the-missing-word}}
+
+Our goal is take a sentence with a missing word -- for example ``Mary
+eats a \_'', and replace the blank with a `reasonable' replacement word.
+This task is something that people do everyday, especially in a noisy
+setting or when speaking to someone with a thick accent. However, this
+task goes beyond just syntactic validity, since few people would guess
+that the sentence was `Mary eats a laptop'. We need to inject some
+notion of semantics. However, we cannot just naively apply methods from
+WordNet, because we are missing the word that fits in the blank. Most
+WordNet methods are ways of mapping from one word to other words that
+are related in a particular way, eg hypernymy or synonymy.
+
+So in order to move forward, we should first come up with a way of
+distinguishing valid sentences in a way that lets us generate a missing
+word. We decided to adopt a model of language learning that is very
+similar to the notion of near-miss learning. We take a set of training
+sentences, use software from lab 3 to convert them into event
+structures, and group event structures together in a way that lets us
+generalize semantically valid sentences from our training data. This
+means that we are assuming that the training data is semantically valid.
+
+Below, we will experiment with different grouping and generalization
+strategies in order to determine semantically valid replacements for a
+missing word.
+
+    \hypertarget{generate-event-structures}{%
+\subsubsection{Generate Event
+Structures}\label{generate-event-structures}}
+
+First we generate event structures from sentences, which we store in a
+list of dictionaries for simplicity.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{print} \PY{n}{gap\PYZus{}sentences}
+        \PY{n}{events} \PY{o}{=} \PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{sent}\PY{p}{:} \PY{n}{s}\PY{o}{.}\PY{n}{sentenceToEventDict}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sent}\PY{p}{)}\PY{p}{,} \PY{n}{training\PYZus{}sentences}\PY{p}{)}
+        \PY{k}{for} \PY{n}{e} \PY{o+ow}{in} \PY{n}{events}\PY{p}{:}
+            \PY{k}{print} \PY{n}{e}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['Mary \_ the potato']
+\{'action': 'eat', 'patient': 'potato', 'tense': 'present', 'agent': 'John'\}
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'John'\}
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'Mary'\}
+
+    \end{Verbatim}
+
+    \hypertarget{simplest-strategy-no-grouping}{%
+\subsubsection{Simplest Strategy: No
+Grouping}\label{simplest-strategy-no-grouping}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{}Parse each sentence in training data}
+        \PY{k}{def} \PY{n+nf}{train}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sentences}\PY{p}{,} \PY{n}{groupingProcedure}\PY{p}{)}\PY{p}{:}
+            \PY{n}{event\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{sentence} \PY{o+ow}{in} \PY{n}{sentences}\PY{p}{:}
+                \PY{k}{try}\PY{p}{:}
+                   \PY{n}{new\PYZus{}event\PYZus{}dict} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{sentenceToEventDict}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sentence}\PY{p}{)}
+                   \PY{n}{event\PYZus{}list} \PY{o}{=} \PY{n}{groupingProcedure}\PY{p}{(}\PY{n}{event\PYZus{}list}\PY{p}{,} \PY{n}{new\PYZus{}event\PYZus{}dict}\PY{p}{)}
+                \PY{k}{except} \PY{n+ne}{Exception} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} The parser did not return any parse trees.}
+                    \PY{k}{raise}
+            \PY{k}{return} \PY{n}{event\PYZus{}list}
+        
+        \PY{k}{def} \PY{n+nf}{keepSeparate}\PY{p}{(}\PY{n}{event\PYZus{}list}\PY{p}{,} \PY{n}{new\PYZus{}event\PYZus{}dict}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{event\PYZus{}list} \PY{o}{+} \PY{p}{[}\PY{n}{new\PYZus{}event\PYZus{}dict}\PY{p}{]}
+        
+        \PY{n}{event\PYZus{}groupings} \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{keepSeparate}\PY{p}{)}
+        \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{event\PYZus{}groupings}\PY{p}{:}
+            \PY{k}{print} \PY{n}{g}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'action': 'eat', 'patient': 'potato', 'tense': 'present', 'agent': 'John'\}
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'John'\}
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'Mary'\}
+
+    \end{Verbatim}
+
+    \hypertarget{one-difference-groupings}{%
+\subsubsection{One Difference
+Groupings}\label{one-difference-groupings}}
+
+This is a very conservative form of grouping. If two training sentences
+the same event structure but differ across one feature, we group
+together the values of that feature.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{groupIfOneDiff}\PY{p}{(}\PY{n}{event\PYZus{}list}\PY{p}{,} \PY{n}{new\PYZus{}event}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}if different structure, do not match}
+            \PY{c+c1}{\PYZsh{}maybe only do after reaching a certain size}
+            \PY{n}{new\PYZus{}event\PYZus{}list} \PY{o}{=} \PY{n}{copy}\PY{o}{.}\PY{n}{deepcopy}\PY{p}{(}\PY{n}{event\PYZus{}list}\PY{p}{)}
+            \PY{n}{merged} \PY{o}{=} \PY{n+nb+bp}{False}
+            \PY{c+c1}{\PYZsh{}try merging in}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{event\PYZus{}list}\PY{p}{)}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}try to match with event\PYZus{}list[i]}
+                \PY{n}{event} \PY{o}{=} \PY{n}{event\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                \PY{k}{if} \PY{n+nb}{set}\PY{p}{(}\PY{n}{event}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{==} \PY{n+nb}{set}\PY{p}{(}\PY{n}{new\PYZus{}event}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{unequal\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{0}
+                    \PY{k}{for} \PY{n}{feat} \PY{o+ow}{in} \PY{n}{event}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                        \PY{k}{if} \PY{n}{new\PYZus{}event}\PY{p}{[}\PY{n}{feat}\PY{p}{]} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{event}\PY{p}{[}\PY{n}{feat}\PY{p}{]}\PY{p}{:}
+                            \PY{n}{unequal\PYZus{}feat} \PY{o}{=} \PY{n}{feat}
+                            \PY{n}{unequal\PYZus{}count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                    \PY{k}{if} \PY{n}{unequal\PYZus{}count} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:} \PY{n}{merged} \PY{o}{=} \PY{n+nb+bp}{True}
+                    \PY{k}{elif} \PY{n}{unequal\PYZus{}count} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:} \PY{c+c1}{\PYZsh{}merge into previous}
+                        \PY{n}{new\PYZus{}event\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{unequal\PYZus{}feat}\PY{p}{]}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{new\PYZus{}event}\PY{p}{[}\PY{n}{unequal\PYZus{}feat}\PY{p}{]}\PY{p}{)}
+                        \PY{n}{merged} \PY{o}{=} \PY{n+nb+bp}{True}
+            \PY{c+c1}{\PYZsh{}make new spot}
+            \PY{k}{if} \PY{o+ow}{not} \PY{n}{merged}\PY{p}{:}
+                \PY{n}{new\PYZus{}event\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{k}\PY{p}{:}\PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{n}{v}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,}\PY{n}{v} \PY{o+ow}{in} \PY{n}{new\PYZus{}event}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+            \PY{k}{return} \PY{n}{new\PYZus{}event\PYZus{}list}
+        
+        \PY{n}{event\PYZus{}groupings} \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{groupIfOneDiff}\PY{p}{)}
+        \PY{k}{for} \PY{n}{e} \PY{o+ow}{in} \PY{n}{events}\PY{p}{:}
+            \PY{k}{print} \PY{n}{e}
+        \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{event\PYZus{}groupings}\PY{p}{:}
+            \PY{k}{print} \PY{n}{g}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'action': 'eat', 'patient': 'potato', 'tense': 'present', 'agent': 'John'\}
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'John'\}
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'Mary'\}
+\{'action': set(['eat']), 'tense': set(['present']), 'patient': set(['tomato', 'potato']), 'agent': set(['John', 'Mary'])\}
+
+    \end{Verbatim}
+
+    Note that the above only produces one output grouping (as opposed to two
+groupings, composed of sentences (1,2) and (2,3)). This is because we
+are applying the groupings iteratively. We loop through the events, and
+compare the current event with the groupings that we have collected up
+to that point. The comparison in this case is not checking for equality
+between values of a common feature, but rather it is checking for
+inclusion of the current event's feature values within groupings of that
+feature.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ feat }\KeywordTok{in}\NormalTok{ event.keys():}
+    \ControlFlowTok{if}\NormalTok{ new_event[feat] }\KeywordTok{not} \KeywordTok{in}\NormalTok{ event[feat]:}
+\NormalTok{        unequal_feat }\OperatorTok{=}\NormalTok{ feat}
+\end{Highlighting}
+\end{Shaded}
+
+This part of the previous method demonstrates this inclusion checking.
+
+This implies that the same training sentences, in different orders, can
+lead to different event groupings.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{rotate}\PY{p}{(}\PY{n}{lst}\PY{p}{)}\PY{p}{:} 
+            \PY{k}{return} \PY{p}{[}\PY{n}{lst}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]} \PY{o}{+} \PY{n}{lst}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{k}{print} \PY{n}{training\PYZus{}sentences}
+        \PY{k}{print} \PY{n}{training\PYZus{}sentences}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{event\PYZus{}groupings\PYZus{}1} \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{groupIfOneDiff}\PY{p}{)}
+        \PY{n}{event\PYZus{}groupings\PYZus{}2} \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{rotate}\PY{p}{(}\PY{n}{training\PYZus{}sentences}\PY{p}{)}\PY{p}{,} \PY{n}{groupIfOneDiff}\PY{p}{)}
+        
+        \PY{k}{print} \PY{n}{event\PYZus{}groupings\PYZus{}1} \PY{c+c1}{\PYZsh{}creates 1 group}
+        \PY{k}{print} \PY{n}{event\PYZus{}groupings\PYZus{}2} \PY{c+c1}{\PYZsh{}creates 2 groups}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['John eats the potato', 'John eats the tomato', 'Mary eats the tomato']
+['Mary eats the tomato', 'John eats the tomato', 'John eats the potato']
+[\{'action': set(['eat']), 'tense': set(['present']), 'patient': set(['tomato', 'potato']), 'agent': set(['John', 'Mary'])\}]
+[\{'action': set(['eat']), 'tense': set(['present']), 'patient': set(['tomato']), 'agent': set(['John', 'Mary'])\}, \{'action': set(['eat']), 'patient': set(['tomato', 'potato']), 'tense': set(['present']), 'agent': set(['John'])\}]
+
+    \end{Verbatim}
+
+    This grouping pattern is related to near-miss learning:
+
+The reason that event\_groupings\_2 creates 2 instead of 1 grouping is
+that the 1st and 2nd sentence differ from each other is 2 ways, instead
+of just 1.
+
+But maybe this is a bit too conservative of an assumption. Alternately
+we could try grouping when seeing two differences.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{groupIfOneOrTwoDiffs}\PY{p}{(}\PY{n}{event\PYZus{}list}\PY{p}{,} \PY{n}{new\PYZus{}event}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}if different structure, do not match}
+            \PY{c+c1}{\PYZsh{}maybe only do after reaching a certain size}
+            \PY{n}{new\PYZus{}event\PYZus{}list} \PY{o}{=} \PY{n}{copy}\PY{o}{.}\PY{n}{deepcopy}\PY{p}{(}\PY{n}{event\PYZus{}list}\PY{p}{)}
+            \PY{n}{merged} \PY{o}{=} \PY{n+nb+bp}{False}
+            \PY{c+c1}{\PYZsh{}try merging in}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{event\PYZus{}list}\PY{p}{)}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}try to match with event\PYZus{}list[i]}
+                \PY{n}{event} \PY{o}{=} \PY{n}{event\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                \PY{k}{if} \PY{n+nb}{set}\PY{p}{(}\PY{n}{event}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{==} \PY{n+nb}{set}\PY{p}{(}\PY{n}{new\PYZus{}event}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{unequal\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{0}
+                    \PY{k}{for} \PY{n}{feat} \PY{o+ow}{in} \PY{n}{event}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                        \PY{k}{if} \PY{n}{new\PYZus{}event}\PY{p}{[}\PY{n}{feat}\PY{p}{]} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{event}\PY{p}{[}\PY{n}{feat}\PY{p}{]}\PY{p}{:}
+                            \PY{k}{if} \PY{n}{unequal\PYZus{}count} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                                \PY{n}{unequal\PYZus{}feat\PYZus{}1} \PY{o}{=} \PY{n}{feat}
+                            \PY{k}{if} \PY{n}{unequal\PYZus{}count} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                                \PY{n}{unequal\PYZus{}feat\PYZus{}2} \PY{o}{=} \PY{n}{feat}
+                            \PY{n}{unequal\PYZus{}count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                    \PY{k}{if} \PY{n}{unequal\PYZus{}count} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:} \PY{n}{merged} \PY{o}{=} \PY{n+nb+bp}{True}
+                    \PY{k}{elif} \PY{n}{unequal\PYZus{}count} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:} \PY{c+c1}{\PYZsh{}merge into previous}
+                        \PY{n}{new\PYZus{}event\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{unequal\PYZus{}feat\PYZus{}1}\PY{p}{]}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{new\PYZus{}event}\PY{p}{[}\PY{n}{unequal\PYZus{}feat\PYZus{}1}\PY{p}{]}\PY{p}{)}
+                        \PY{n}{merged} \PY{o}{=} \PY{n+nb+bp}{True}
+                    \PY{k}{elif} \PY{n}{unequal\PYZus{}count} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{:} \PY{c+c1}{\PYZsh{}merge into previous}
+                        \PY{n}{new\PYZus{}event\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{unequal\PYZus{}feat\PYZus{}1}\PY{p}{]}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{new\PYZus{}event}\PY{p}{[}\PY{n}{unequal\PYZus{}feat\PYZus{}1}\PY{p}{]}\PY{p}{)}
+                        \PY{n}{new\PYZus{}event\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{unequal\PYZus{}feat\PYZus{}2}\PY{p}{]}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{new\PYZus{}event}\PY{p}{[}\PY{n}{unequal\PYZus{}feat\PYZus{}2}\PY{p}{]}\PY{p}{)}
+                        \PY{n}{merged} \PY{o}{=} \PY{n+nb+bp}{True}
+            \PY{c+c1}{\PYZsh{}make new spot}
+            \PY{k}{if} \PY{o+ow}{not} \PY{n}{merged}\PY{p}{:}
+                \PY{n}{new\PYZus{}event\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{k}\PY{p}{:}\PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{n}{v}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,}\PY{n}{v} \PY{o+ow}{in} \PY{n}{new\PYZus{}event}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+            \PY{k}{return} \PY{n}{new\PYZus{}event\PYZus{}list}
+        
+        \PY{n}{events} \PY{o}{=} \PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{sent}\PY{p}{:} \PY{n}{s}\PY{o}{.}\PY{n}{sentenceToEventDict}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sent}\PY{p}{)}\PY{p}{,} \PY{n}{rotate}\PY{p}{(}\PY{n}{training\PYZus{}sentences}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{e} \PY{o+ow}{in} \PY{n}{events}\PY{p}{:}
+            \PY{k}{print} \PY{n}{e}
+        \PY{n}{event\PYZus{}groupings} \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{rotate}\PY{p}{(}\PY{n}{training\PYZus{}sentences}\PY{p}{)}\PY{p}{,} \PY{n}{groupIfOneOrTwoDiffs}\PY{p}{)}
+        \PY{k}{print} \PY{n}{event\PYZus{}groupings}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'Mary'\}
+\{'action': 'eat', 'patient': 'potato', 'tense': 'present', 'agent': 'John'\}
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'John'\}
+[\{'action': set(['eat']), 'tense': set(['present']), 'patient': set(['tomato', 'potato']), 'agent': set(['John', 'Mary'])\}]
+
+    \end{Verbatim}
+
+    \hypertarget{filling-in-the-word-blank}{%
+\subsubsection{Filling In the Word
+Blank}\label{filling-in-the-word-blank}}
+
+Now that we have come up with some event grouping strategies, we return
+to the original goal of our project -- to fill in the missing word.
+
+The reason for the groupings above, is that we would like to take
+training event structures like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[}\StringTok{'John eats the potato'}\NormalTok{, }\StringTok{'John eats the tomato'}\NormalTok{, }\StringTok{'Mary eats the tomato'}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+And conclude that:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[}\StringTok{'Mary eats the potato'}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+is a valid sentence.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{checkGoodSentence}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}\PY{p}{:}
+            \PY{n}{event} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{sentenceToEventDict}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sentence}\PY{p}{)}
+            \PY{k}{if} \PY{o+ow}{not} \PY{n}{event}\PY{p}{:} \PY{k}{return} \PY{n+nb+bp}{False}
+            \PY{k}{for} \PY{n}{event\PYZus{}group} \PY{o+ow}{in} \PY{n}{event\PYZus{}groupings}\PY{p}{:}
+                \PY{k}{if} \PY{n+nb}{set}\PY{p}{(}\PY{n}{event}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{==} \PY{n+nb}{set}\PY{p}{(}\PY{n}{event\PYZus{}group}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n+nb}{all}\PY{p}{(}\PY{p}{[}\PY{n}{event}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o+ow}{in} \PY{n}{event\PYZus{}group}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n}{event}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                        \PY{k}{return} \PY{n+nb+bp}{True}
+            \PY{k}{return} \PY{n+nb+bp}{False}
+        
+        \PY{n}{sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary ate the potato}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{event\PYZus{}groupings} \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{groupIfOneDiff}\PY{p}{)}
+        \PY{n}{event} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{sentenceToEventDict}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sentence}\PY{p}{)}
+        \PY{k}{print} \PY{n}{event}
+        \PY{k}{print} \PY{n}{event\PYZus{}groupings}
+        
+        \PY{k}{print} \PY{n}{checkGoodSentence}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'action': 'eat', 'patient': 'potato', 'tense': 'past', 'agent': 'Mary'\}
+[\{'action': set(['eat']), 'tense': set(['present']), 'patient': set(['tomato', 'potato']), 'agent': set(['John', 'Mary'])\}]
+False
+
+    \end{Verbatim}
+
+    What the above means is that the grouping structure that we have
+generated `accepts' the sentence `Mary ate the potato' after being
+trained on the 3 sentences above, which is exactly what we were looking
+for!
+
+However, we want to be able to hypothesize that `potato' is a good word
+to fill in for `Mary ate the \_'. So instead of starting with `Mary ate
+the potato', let's start with `Mary ate the \_', and check the semantic
+validity of every word in the lexicon.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}\PY{p}{:}
+            \PY{n}{good\PYZus{}hypotheses} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{guess\PYZus{}words} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{getTerminals}\PY{p}{(}\PY{n}{sem}\PY{p}{)} \PY{c+c1}{\PYZsh{}all words in the lexicon}
+            \PY{n}{filler\PYZus{}i} \PY{o}{=} \PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                
+            \PY{k}{try}\PY{p}{:}
+                \PY{k}{for} \PY{n}{guess\PYZus{}word} \PY{o+ow}{in} \PY{n}{guess\PYZus{}words}\PY{p}{:}
+                    \PY{n}{guess\PYZus{}sentence} \PY{o}{=} \PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{guess\PYZus{}word}\PY{p}{)}
+                    \PY{k}{if} \PY{n}{checkGoodSentence}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{guess\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{good\PYZus{}hypotheses}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{guess\PYZus{}word}\PY{p}{)}
+            \PY{k}{except}\PY{p}{:} \PY{k}{pass}
+            \PY{k}{return} \PY{n}{good\PYZus{}hypotheses}
+        
+        \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary ate the \PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+        \PY{k}{print} \PY{n}{filler\PYZus{}word\PYZus{}guesses}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[]
+
+    \end{Verbatim}
+
+    This is doing what we want, but ideally we would like to extend our
+groupings to more than just the lexicon that we have written down.
+
+This is where we can use wordnet to generalize our results.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k+kn}{from} \PY{n+nn}{nltk.corpus} \PY{k+kn}{import} \PY{n}{wordnet} \PY{k}{as} \PY{n}{wn}
+         
+         \PY{k}{def} \PY{n+nf}{flatten}\PY{p}{(}\PY{n}{lst}\PY{p}{)}\PY{p}{:}
+             \PY{n}{out} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{lst}\PY{p}{:}
+                 \PY{k}{if} \PY{n+nb}{type}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o+ow}{is} \PY{n+nb}{list}\PY{p}{:}
+                     \PY{n}{out}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{flatten}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{out}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+             \PY{k}{return} \PY{n}{out}
+         
+         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary ate the \PYZus{}}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{what\PYZus{}mary\PYZus{}ate} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+         \PY{n}{synonyms} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{w}\PY{p}{:} \PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{w}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{what\PYZus{}mary\PYZus{}ate}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{sents} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary ate the }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n}{syn} \PY{k}{for} \PY{n}{syn} \PY{o+ow}{in} \PY{n}{synonyms}\PY{p}{]}
+         \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{sents}\PY{p}{:} \PY{k}{print} \PY{n}{x}
+\end{Verbatim}
+
+
+    We immediately see a problem with this method. In trying to generalize
+our semantic results, we lose even basic syntactic correctness. If I
+change the training sentences to present tense, I end up with noun
+synonyms.
+
+Note that here I am filtering by noun synonym class for clarity.
+
+Eg `Mary \_ the tomato' --\textgreater{} `Mary chow the tomato'
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary \PYZus{} the tomato}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{what\PYZus{}mary\PYZus{}did} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+         \PY{n}{synonyms} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{w}\PY{p}{:} \PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{w}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{what\PYZus{}mary\PYZus{}did}\PY{p}{)}\PY{p}{)}
+         \PY{n}{noun\PYZus{}synonyms} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{w}\PY{p}{:} \PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{w}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{NOUN}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{what\PYZus{}mary\PYZus{}did}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{syn} \PY{o+ow}{in} \PY{n}{synonyms}\PY{p}{:}
+             \PY{n}{sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n}{syn}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ the tomato}\PY{l+s+s1}{\PYZsq{}}
+             \PY{k}{if} \PY{n}{syn} \PY{o+ow}{in} \PY{n}{noun\PYZus{}synonyms}\PY{p}{:}
+                 \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Noun synonym: }\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n}{sentence}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Verb synonym: }\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n}{sentence}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Noun synonym: Mary chow the tomato
+Noun synonym: Mary chuck the tomato
+Noun synonym: Mary eats the tomato
+Noun synonym: Mary grub the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary feed the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary eat\_on the tomato
+Verb synonym: Mary consume the tomato
+Verb synonym: Mary eat\_up the tomato
+Verb synonym: Mary use\_up the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary deplete the tomato
+Verb synonym: Mary exhaust the tomato
+Verb synonym: Mary run\_through the tomato
+Verb synonym: Mary wipe\_out the tomato
+Verb synonym: Mary corrode the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary rust the tomato
+Noun synonym: Mary chow the tomato
+Noun synonym: Mary chuck the tomato
+Noun synonym: Mary eats the tomato
+Noun synonym: Mary grub the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary feed the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary eat\_on the tomato
+Verb synonym: Mary consume the tomato
+Verb synonym: Mary eat\_up the tomato
+Verb synonym: Mary use\_up the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary deplete the tomato
+Verb synonym: Mary exhaust the tomato
+Verb synonym: Mary run\_through the tomato
+Verb synonym: Mary wipe\_out the tomato
+Verb synonym: Mary corrode the tomato
+Verb synonym: Mary eat the tomato
+Verb synonym: Mary rust the tomato
+
+    \end{Verbatim}
+
+    However, in this case, I can just as easily filter by verb, fixing the
+part of speech, but not the tense or the plurality.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{synonyms} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{w}\PY{p}{:} \PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{w}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{VERB}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{what\PYZus{}mary\PYZus{}did}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{sents} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n}{syn}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ the tomato}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{syn} \PY{o+ow}{in} \PY{n}{synonyms}\PY{p}{]}
+         \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{sents}\PY{p}{:} \PY{k}{print} \PY{n}{x}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Mary eat the tomato
+Mary eat the tomato
+Mary feed the tomato
+Mary eat the tomato
+Mary eat the tomato
+Mary eat\_on the tomato
+Mary consume the tomato
+Mary eat\_up the tomato
+Mary use\_up the tomato
+Mary eat the tomato
+Mary deplete the tomato
+Mary exhaust the tomato
+Mary run\_through the tomato
+Mary wipe\_out the tomato
+Mary corrode the tomato
+Mary eat the tomato
+Mary rust the tomato
+Mary eat the tomato
+Mary eat the tomato
+Mary feed the tomato
+Mary eat the tomato
+Mary eat the tomato
+Mary eat\_on the tomato
+Mary consume the tomato
+Mary eat\_up the tomato
+Mary use\_up the tomato
+Mary eat the tomato
+Mary deplete the tomato
+Mary exhaust the tomato
+Mary run\_through the tomato
+Mary wipe\_out the tomato
+Mary corrode the tomato
+Mary eat the tomato
+Mary rust the tomato
+
+    \end{Verbatim}
+
+    One potential attempt at a fix would be to use an off-the-shelf parser
+to check the syntactic validity of each proposed sentence.
+
+Below, we try this with the Penn Tree Bank grammar.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k+kn}{import} \PY{n+nn}{nltk}
+         \PY{c+c1}{\PYZsh{}nltk.download(\PYZsq{}treebank\PYZsq{})}
+         \PY{k+kn}{from} \PY{n+nn}{nltk.corpus} \PY{k+kn}{import} \PY{n}{treebank}
+         \PY{k+kn}{from} \PY{n+nn}{nltk.grammar} \PY{k+kn}{import} \PY{n}{CFG}\PY{p}{,} \PY{n}{Nonterminal}
+         
+         \PY{n}{tbank\PYZus{}productions} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{n}{production} \PY{k}{for} \PY{n}{sent} \PY{o+ow}{in} \PY{n}{treebank}\PY{o}{.}\PY{n}{parsed\PYZus{}sents}\PY{p}{(}\PY{p}{)}
+                                 \PY{k}{for} \PY{n}{production} \PY{o+ow}{in} \PY{n}{sent}\PY{o}{.}\PY{n}{productions}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{tbank\PYZus{}grammar} \PY{o}{=} \PY{n}{CFG}\PY{p}{(}\PY{n}{Nonterminal}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n+nb}{list}\PY{p}{(}\PY{n}{tbank\PYZus{}productions}\PY{p}{)}\PY{p}{)}
+         \PY{n}{parser} \PY{o}{=} \PY{n}{nltk}\PY{o}{.}\PY{n}{parse}\PY{o}{.}\PY{n}{EarleyChartParser}\PY{p}{(}\PY{n}{tbank\PYZus{}grammar}\PY{p}{)}
+         \PY{k}{print} \PY{n+nb}{list}\PY{p}{(}\PY{n}{parser}\PY{o}{.}\PY{n}{parse}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary has food}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VBP', ['has']), Tree('NP-TMP-CLR', [Tree('NN', ['food'])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBP', ['has']), Tree('NP-TMP-CLR', [Tree('NN', ['food'])])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBZ', ['has']), Tree('NP-PRD', [Tree('NN', ['food'])])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBZ', ['has']), Tree('NP-PRD', [Tree('NP', [Tree('NN', ['food'])])])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBZ', ['has']), Tree('NP-PRD', [Tree('NP', [Tree('NP', [Tree('NN', ['food'])])])])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBP', ['has']), Tree('NP-PRD', [Tree('NN', ['food'])])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBP', ['has']), Tree('NP-PRD', [Tree('NP', [Tree('NN', ['food'])])])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBP', ['has']), Tree('NP-PRD', [Tree('NP', [Tree('NP', [Tree('NN', ['food'])])])])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBZ', ['has']), Tree('NP-CLR', [Tree('NN', ['food'])])])])]), Tree('S', [Tree('NP-SBJ-8', [Tree('NNP', ['Mary'])]), Tree('VP', [Tree('VP', [Tree('VBP', ['has']), Tree('NP-CLR', [Tree('NN', ['food'])])])])])]
+
+    \end{Verbatim}
+
+    Well, it looks like the above is effectively useless for our purposes.
+It will only have the words in the small subset of PTB that we can
+download, and takes very long to parse even `Mary has food'.
+
+Let's try CMU's link grammar.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PYZpc{}\PYZpc{}bash
+         \PY{n+nb}{cd} ./link\PYZhy{}4.1b\PYZhy{}mod/ \PY{o}{\PYZam{}\PYZam{}} make \PYZhy{}B
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+gcc -c -g -O -w -Iinclude src/parse.c -o obj/parse.o
+gcc -c -g -O -w -Iinclude src/prune.c -o obj/prune.o
+gcc -c -g -O -w -Iinclude src/and.c -o obj/and.o
+gcc -c -g -O -w -Iinclude src/post-process.c -o obj/post-process.o
+gcc -c -g -O -w -Iinclude src/pp\_lexer.c -o obj/pp\_lexer.o
+gcc -c -g -O -w -Iinclude src/resources.c -o obj/resources.o
+gcc -c -g -O -w -Iinclude src/analyze-linkage.c -o obj/analyze-linkage.o
+gcc -c -g -O -w -Iinclude src/string-set.c -o obj/string-set.o
+gcc -c -g -O -w -Iinclude src/pp\_linkset.c -o obj/pp\_linkset.o
+gcc -c -g -O -w -Iinclude src/pp\_knowledge.c -o obj/pp\_knowledge.o
+gcc -c -g -O -w -Iinclude src/error.c -o obj/error.o
+gcc -c -g -O -w -Iinclude src/word-file.c -o obj/word-file.o
+gcc -c -g -O -w -Iinclude src/utilities.c -o obj/utilities.o
+gcc -c -g -O -w -Iinclude src/tokenize.c -o obj/tokenize.o
+gcc -c -g -O -w -Iinclude src/command-line.c -o obj/command-line.o
+gcc -c -g -O -w -Iinclude src/read-dict.c -o obj/read-dict.o
+gcc -c -g -O -w -Iinclude src/print.c -o obj/print.o
+gcc -c -g -O -w -Iinclude src/preparation.c -o obj/preparation.o
+gcc -c -g -O -w -Iinclude src/api.c -o obj/api.o
+gcc -c -g -O -w -Iinclude src/massage.c -o obj/massage.o
+gcc -c -g -O -w -Iinclude src/linkset.c -o obj/linkset.o
+gcc -c -g -O -w -Iinclude src/idiom.c -o obj/idiom.o
+gcc -c -g -O -w -Iinclude src/fast-match.c -o obj/fast-match.o
+gcc -c -g -O -w -Iinclude src/extract-links.c -o obj/extract-links.o
+gcc -c -g -O -w -Iinclude src/count.c -o obj/count.o
+gcc -c -g -O -w -Iinclude src/build-disjuncts.c -o obj/build-disjuncts.o
+gcc -c -g -O -w -Iinclude src/constituents.c -o obj/constituents.o
+gcc -c -g -O -w -Iinclude src/print-util.c -o obj/print-util.o
+gcc -O -g  obj/parse.o obj/prune.o obj/and.o obj/post-process.o obj/pp\_lexer.o obj/resources.o obj/analyze-linkage.o obj/string-set.o obj/pp\_linkset.o obj/pp\_knowledge.o obj/error.o obj/word-file.o obj/utilities.o obj/tokenize.o obj/command-line.o obj/read-dict.o obj/print.o obj/preparation.o obj/api.o obj/massage.o obj/linkset.o obj/idiom.o obj/fast-match.o obj/extract-links.o obj/count.o obj/build-disjuncts.o obj/constituents.o obj/print-util.o  -o ./parse 
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{filterBySyntax}\PY{p}{(}\PY{n}{sentences}\PY{p}{)}\PY{p}{:}
+             \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./link\PYZhy{}4.1b\PYZhy{}mod/input.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{w+}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{sentence} \PY{o+ow}{in} \PY{n}{sentences}\PY{p}{:}
+                     \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{sentence}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{wd} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{getcwd}\PY{p}{(}\PY{p}{)}
+             \PY{n}{os}\PY{o}{.}\PY{n}{chdir}\PY{p}{(}\PY{n}{wd}\PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/link\PYZhy{}4.1b\PYZhy{}mod}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{subprocess}\PY{o}{.}\PY{n}{call}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./parse}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{os}\PY{o}{.}\PY{n}{chdir}\PY{p}{(}\PY{n}{wd}\PY{p}{)}
+         
+             \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./link\PYZhy{}4.1b\PYZhy{}mod/output.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                 \PY{n}{syntactical\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{if} \PY{n}{x} \PY{o}{!=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{k}{return} \PY{n}{syntactical\PYZus{}sentences}
+         
+         \PY{n}{synonyms} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{w}\PY{p}{:} \PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{w}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{what\PYZus{}mary\PYZus{}did}\PY{p}{)}\PY{p}{)}
+         \PY{n}{sentences} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n}{syn}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ the tomato}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{syn} \PY{o+ow}{in} \PY{n}{synonyms}\PY{p}{]}
+         \PY{n}{syntactical\PYZus{}sentences} \PY{o}{=} \PY{n}{filterBySyntax}\PY{p}{(}\PY{n}{sentences}\PY{p}{)}
+         \PY{k}{print} \PY{n}{syntactical\PYZus{}sentences}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['Mary eats the tomato', 'Mary eats the tomato']
+
+    \end{Verbatim}
+
+    This seems to be working better as a syntax filter, but we are again at
+a cross-roads. No sentence from our generalizations was grammatical!
+
+So we will have to be a bit more careful in how we handle this.
+
+For this particular case, we can use the NodeBox English Linguistics
+library to force conjugation of the proposed verbs.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{conjs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{syn} \PY{o+ow}{in} \PY{n}{synonyms}\PY{p}{:}
+             \PY{k}{try}\PY{p}{:}
+                 \PY{n}{conj} \PY{o}{=} \PY{n}{en}\PY{o}{.}\PY{n}{verb}\PY{o}{.}\PY{n}{present}\PY{p}{(}\PY{n}{syn}\PY{p}{,} \PY{n}{person}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{negate}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}
+                 \PY{n}{conjs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{conj}\PY{p}{)}
+             \PY{k}{except} \PY{n+ne}{Exception} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+                 \PY{n}{conjs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{k}{print} \PY{n}{synonyms}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}
+         \PY{k}{print} \PY{n}{conjs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[u'chow', u'chuck', u'eats', u'grub', u'eat']
+['', 'chucks', 'eats', 'grubs', 'eats']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{conj\PYZus{}sents} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n}{conj}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ the tomato}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{conj} \PY{o+ow}{in} \PY{n}{conjs} \PY{k}{if} \PY{n}{conj}\PY{p}{]}
+         
+         \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sentences with conjugated verb: }\PY{l+s+s2}{\PYZdq{}}
+         \PY{k}{print} \PY{n}{conj\PYZus{}sents}
+         \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}
+         
+         \PY{n}{filtered} \PY{o}{=} \PY{n}{filterBySyntax}\PY{p}{(}\PY{n}{conj\PYZus{}sents}\PY{p}{)}
+         \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{after filter: }\PY{l+s+s2}{\PYZdq{}} 
+         \PY{k}{print} \PY{n}{filtered}
+         
+         \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}
+         \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{removed: }\PY{l+s+s2}{\PYZdq{}}
+         \PY{k}{print} \PY{p}{[}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{conj\PYZus{}sents} \PY{k}{if} \PY{n}{x} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{filtered}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+sentences with conjugated verb: 
+['Mary chucks the tomato', 'Mary eats the tomato', 'Mary grubs the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary fees the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary consumes the tomato', 'Mary eats the tomato', 'Mary depletes the tomato', 'Mary exhausts the tomato', 'Mary corrodes the tomato', 'Mary eats the tomato', 'Mary rusts the tomato', 'Mary chucks the tomato', 'Mary eats the tomato', 'Mary grubs the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary fees the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary consumes the tomato', 'Mary eats the tomato', 'Mary depletes the tomato', 'Mary exhausts the tomato', 'Mary corrodes the tomato', 'Mary eats the tomato', 'Mary rusts the tomato']
+
+after filter: 
+['Mary chucks the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary consumes the tomato', 'Mary eats the tomato', 'Mary depletes the tomato', 'Mary exhausts the tomato', 'Mary corrodes the tomato', 'Mary eats the tomato', 'Mary chucks the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary eats the tomato', 'Mary consumes the tomato', 'Mary eats the tomato', 'Mary depletes the tomato', 'Mary exhausts the tomato', 'Mary corrodes the tomato', 'Mary eats the tomato']
+
+removed: 
+['Mary grubs the tomato', 'Mary fees the tomato', 'Mary rusts the tomato', 'Mary grubs the tomato', 'Mary fees the tomato', 'Mary rusts the tomato']
+
+    \end{Verbatim}
+
+    This finally allows us to come up with generalized alternatives for
+`Mary \_ the tomato'! The problem with the above method; however, is
+that we had to manually specify that the blank was supposed to be
+3rd-person verb.
+
+We need to get away from this if we would like to generalize to English
+in general. Ideally, we could look at the event structures that we
+generate from our original grouping procedure, and use that information
+to automate the conjugation/modification of our generated sentences.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{}start\PYZus{}sentence = \PYZsq{}Mary \PYZus{} the tomato\PYZsq{}}
+         \PY{c+c1}{\PYZsh{}filler\PYZus{}word\PYZus{}guesses = test(sem, [start\PYZus{}sentence], event\PYZus{}groupings)}
+         \PY{c+c1}{\PYZsh{}print filler\PYZus{}word\PYZus{}guesses}
+         \PY{c+c1}{\PYZsh{}what\PYZus{}mary\PYZus{}did = filler\PYZus{}word\PYZus{}guesses[\PYZsq{}Mary \PYZus{} the tomato\PYZsq{}]}
+         \PY{n}{what\PYZus{}mary\PYZus{}did\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n}{verb}\PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ the tomato}\PY{l+s+s2}{\PYZdq{}} \PY{k}{for} \PY{n}{verb} \PY{o+ow}{in} \PY{n}{what\PYZus{}mary\PYZus{}did}\PY{p}{]}
+         \PY{n}{generated\PYZus{}event\PYZus{}structures} \PY{o}{=} \PY{p}{[}\PY{n}{s}\PY{o}{.}\PY{n}{sentenceToEventDict}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sentence}\PY{p}{)} \PY{k}{for} \PY{n}{sentence} \PY{o+ow}{in} \PY{n}{what\PYZus{}mary\PYZus{}did\PYZus{}sentences}\PY{p}{]}
+         \PY{k}{print} \PY{n}{generated\PYZus{}event\PYZus{}structures}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'action': 'eat', 'patient': 'tomato', 'tense': 'present', 'agent': 'Mary'\}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{s}\PY{o}{.}\PY{n}{parse\PYZus{}input\PYZus{}str}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{what\PYZus{}mary\PYZus{}did\PYZus{}sentences}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}19}]:}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{FillInTheGaps_files/FillInTheGaps_33_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{tree} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{parse\PYZus{}input\PYZus{}str}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{what\PYZus{}mary\PYZus{}did\PYZus{}sentences}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{k}{print} \PY{n}{tree}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(Start[]
+  (S[]
+    (NP[-pro, -wh] (Name[] Mary))
+    (VP[]
+      (V\_args[]
+        (V2[+tense] eats)
+        (NP[-pro, -wh]
+          (Det[] the)
+          (APX[] )
+          (N[-mass, number='singular'] tomato))))))
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{subtree} \PY{o}{=} \PY{n}{tree}\PY{o}{.}\PY{n}{pos}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{c+c1}{\PYZsh{} 2nd element of sentence was blank}
+         \PY{k}{print} \PY{n}{subtree}
+         
+         \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{features} \PY{o}{=} \PY{n}{subtree}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{k}{print} \PY{n}{features}
+         \PY{c+c1}{\PYZsh{}print tree.leaf\PYZus{}treeposition(1)}
+         \PY{c+c1}{\PYZsh{}print tree[0][1][0][0]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+('eats', V2[+tense])
+
+[ *type* = 'V2' ]
+[ tense  = True ]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{test\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary \PYZus{} the tomato}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{filler\PYZus{}index} \PY{o}{=} \PY{n}{test\PYZus{}sentence}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{print} \PY{n}{synonyms}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{k}{for} \PY{n}{sentence} \PY{o+ow}{in} \PY{n}{what\PYZus{}mary\PYZus{}did\PYZus{}sentences}\PY{p}{:}
+             \PY{n}{tree} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{parse\PYZus{}input\PYZus{}str}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{sentence}\PY{p}{)}
+             \PY{n}{features} \PY{o}{=} \PY{n}{tree}\PY{o}{.}\PY{n}{pos}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{n}{filler\PYZus{}index}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{k}{print} \PY{n}{features}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[u'chow', u'chuck', u'eats', u'grub', u'eat', u'eat', u'feed', u'eat', u'eat', u'eat\_on', u'consume', u'eat\_up', u'use\_up', u'eat', u'deplete', u'exhaust', u'run\_through', u'wipe\_out', u'corrode', u'eat', u'rust', u'chow', u'chuck', u'eats', u'grub', u'eat', u'eat', u'feed', u'eat', u'eat', u'eat\_on', u'consume', u'eat\_up', u'use\_up', u'eat', u'deplete', u'exhaust', u'run\_through', u'wipe\_out', u'corrode', u'eat', u'rust'] 
+
+[ *type* = 'V2' ]
+[ tense  = True ] 
+
+[ *type* = 'V2' ]
+[ tense  = True ] 
+
+
+    \end{Verbatim}
+
+    Now that we have the features, we can use these to inform the filtering
+of our synonyms!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{k}{def} \PY{n+nf}{findPOS}\PY{p}{(}\PY{n}{features}\PY{p}{)}\PY{p}{:}
+             \PY{n}{feat\PYZus{}keys} \PY{o}{=} \PY{n}{features}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
+             \PY{n}{feat\PYZus{}type\PYZus{}index} \PY{o}{=} \PY{n+nb}{filter}\PY{p}{(}\PY{k}{lambda} \PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{:} \PY{n+nb}{type}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o+ow}{is} \PY{n}{nltk}\PY{o}{.}\PY{n}{featstruct}\PY{o}{.}\PY{n}{Feature}\PY{p}{,} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{feat\PYZus{}keys}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{feat\PYZus{}type} \PY{o}{=} \PY{n}{feat\PYZus{}keys}\PY{p}{[}\PY{n}{feat\PYZus{}type\PYZus{}index}\PY{p}{]}
+             \PY{n}{POS} \PY{o}{=} \PY{n}{features}\PY{p}{[}\PY{n}{feat\PYZus{}type}\PY{p}{]}
+             \PY{k}{return} \PY{n}{POS}
+         
+         \PY{k}{def} \PY{n+nf}{getSynonymsSingleWord}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{POS}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{flatten}\PY{p}{(}\PY{p}{[}\PY{n}{synset}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{synset} \PY{o+ow}{in} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{NOUN}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{k}{elif} \PY{n}{POS}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{flatten}\PY{p}{(}\PY{p}{[}\PY{n}{synset}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{synset} \PY{o+ow}{in} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{VERB}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{k}{return} \PY{n}{flatten}\PY{p}{(}\PY{p}{[}\PY{n}{synset}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{synset} \PY{o+ow}{in} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{NOUN}\PY{p}{)}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}future work}
+                 
+             
+         \PY{k}{def} \PY{n+nf}{getSynonyms}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{POS}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{word}\PY{p}{:} \PY{n}{getSynonymsSingleWord}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{POS}\PY{p}{)}\PY{p}{,} \PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{conjugate}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{POS\PYZus{}info}\PY{p}{)}\PY{p}{:}
+             \PY{n}{features}\PY{p}{,} \PY{n}{subj\PYZus{}features} \PY{o}{=} \PY{n}{POS\PYZus{}info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{POS\PYZus{}info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{subj\PYZus{}features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{POS}\PY{p}{,} \PY{n}{subj\PYZus{}POS} \PY{o}{=} \PY{n}{POS\PYZus{}info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{POS\PYZus{}info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{subj\PYZus{}POS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{conj} \PY{o}{=} \PY{n+nb+bp}{None}
+             \PY{k}{if} \PY{n}{POS}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{c+c1}{\PYZsh{}Verb}
+                 \PY{k}{if} \PY{n}{features}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tense}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{subj\PYZus{}POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{and} \PY{n}{subj\PYZus{}features}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plural}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                         \PY{n}{conj} \PY{o}{=} \PY{n}{en}\PY{o}{.}\PY{n}{verb}\PY{o}{.}\PY{n}{conjugate}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{tense}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{present plural}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                     \PY{k}{elif} \PY{n}{subj\PYZus{}POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{or} \PY{n}{subj\PYZus{}POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                         \PY{n}{conj} \PY{o}{=} \PY{n}{en}\PY{o}{.}\PY{n}{verb}\PY{o}{.}\PY{n}{conjugate}\PY{p}{(}\PY{n}{word}\PY{p}{,} \PY{n}{tense}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{3rd singular present}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{conj} \PY{o}{=} \PY{n}{en}\PY{o}{.}\PY{n}{verb}\PY{o}{.}\PY{n}{infinitive}\PY{p}{(}\PY{n}{word}\PY{p}{)}
+             \PY{k}{elif} \PY{n}{POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{if} \PY{n}{features}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{singular}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                     \PY{n}{conj} \PY{o}{=} \PY{n}{en}\PY{o}{.}\PY{n}{noun}\PY{o}{.}\PY{n}{singular}\PY{p}{(}\PY{n}{word}\PY{p}{)}
+                 \PY{k}{elif} \PY{n}{features}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plural}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                     \PY{n}{conj} \PY{o}{=} \PY{n}{en}\PY{o}{.}\PY{n}{noun}\PY{o}{.}\PY{n}{plural}\PY{p}{(}\PY{n}{word}\PY{p}{)}
+             \PY{k}{elif} \PY{n}{POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{conj} \PY{o}{=} \PY{n}{en}\PY{o}{.}\PY{n}{noun}\PY{o}{.}\PY{n}{singular}\PY{p}{(}\PY{n}{word}\PY{p}{)}
+             \PY{k}{if} \PY{o+ow}{not} \PY{n}{conj}\PY{p}{:}
+                 \PY{n}{conj} \PY{o}{=} \PY{n}{word}
+             \PY{k}{return} \PY{n}{conj}
+         
+         \PY{k}{def} \PY{n+nf}{fillerWordToPOSInfo}\PY{p}{(}\PY{n}{filler\PYZus{}word}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{)}\PY{p}{:}
+             \PY{n}{filler\PYZus{}index} \PY{o}{=} \PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{filled\PYZus{}sentence} \PY{o}{=} \PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{filler\PYZus{}word}\PY{p}{)}
+             \PY{n}{tree} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{parse\PYZus{}input\PYZus{}str}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{filled\PYZus{}sentence}\PY{p}{)}
+             \PY{n}{features}\PY{p}{,} \PY{n}{subj\PYZus{}features} \PY{o}{=} \PY{n}{tree}\PY{o}{.}\PY{n}{pos}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{n}{filler\PYZus{}index}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{tree}\PY{o}{.}\PY{n}{pos}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{n}{POS}\PY{p}{,} \PY{n}{subj\PYZus{}POS} \PY{o}{=} \PY{n}{findPOS}\PY{p}{(}\PY{n}{features}\PY{p}{)}\PY{p}{,} \PY{n}{findPOS}\PY{p}{(}\PY{n}{subj\PYZus{}features}\PY{p}{)}
+             \PY{n}{POS\PYZus{}info} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{features}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{subj\PYZus{}features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{subj\PYZus{}features}\PY{p}{,} 
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{POS}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{subj\PYZus{}POS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{subj\PYZus{}POS}\PY{p}{\PYZcb{}}
+             \PY{k}{return} \PY{n}{POS\PYZus{}info}
+                 
+         \PY{c+c1}{\PYZsh{}conjugate needs all info, but generalize should only need one POS}
+         \PY{k}{def} \PY{n+nf}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{generalizationProcedure}\PY{p}{)}\PY{p}{:} 
+             \PY{n}{POS\PYZus{}info} \PY{o}{=} \PY{n}{fillerWordToPOSInfo}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{)}
+             
+             \PY{n}{generalizations} \PY{o}{=} \PY{n}{generalizationProcedure}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{POS\PYZus{}info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{conjugated\PYZus{}gens} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{generalizations}\PY{p}{:}
+                 \PY{k}{try}\PY{p}{:}
+                     \PY{n}{conjugated\PYZus{}gens}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{conjugate}\PY{p}{(}\PY{n}{g}\PY{p}{,} \PY{n}{POS\PYZus{}info}\PY{p}{)}\PY{p}{)}
+                 \PY{k}{except} \PY{n+ne}{Exception} \PY{k}{as} \PY{n}{e}\PY{p}{:} \PY{k}{pass}
+             \PY{k}{return} \PY{n}{filterBySyntax}\PY{p}{(}\PY{n}{conjugated\PYZus{}gens}\PY{p}{)}
+         
+         \PY{n}{gap\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary \PYZus{} the tomato}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary eats the \PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{c+c1}{\PYZsh{}, \PYZsq{}\PYZus{} eats the tomato\PYZsq{}]}
+         \PY{k}{for} \PY{n}{gap\PYZus{}sentence} \PY{o+ow}{in} \PY{n}{gap\PYZus{}sentences}\PY{p}{:}
+             \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+             \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSynonyms}\PY{p}{)}
+             \PY{k}{print} \PY{n}{gens}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[]
+['white\_potato', 'murphy', 'tater', 'white\_potato', 'white\_potato\_vine', 'love\_apple', 'tomato\_plant']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{filled\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{gap\PYZus{}sentence} \PY{o+ow}{in} \PY{n}{gap\PYZus{}sentences}\PY{p}{:}
+             \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+             \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSynonyms}\PY{p}{)}
+             \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{gens}\PY{p}{:}
+                 \PY{n}{filled\PYZus{}sentences}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{)}
+             \PY{k}{for} \PY{n}{fill} \PY{o+ow}{in} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{:}
+                 \PY{n}{filled\PYZus{}sentences}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{fill}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{filled\PYZus{}sentences}\PY{p}{:}
+             \PY{k}{print} \PY{n}{x}
+         \PY{k}{print} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Count: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{filled\PYZus{}sentences}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Mary eats the tomato
+Mary eats the tomato
+Mary eats the white\_potato
+Mary eats the murphy
+Mary eats the tater
+Mary eats the white\_potato
+Mary eats the white\_potato\_vine
+Mary eats the love\_apple
+Mary eats the tomato\_plant
+Mary eats the potato
+Mary eats the tomato
+Count:  11 
+
+
+    \end{Verbatim}
+
+    Now that we have a way of filtering down our suggested generalizations,
+we are more free to experiment with different generalization techniques.
+
+For example, what if we notice that the is something in common to many
+of the suggestions, whether they be tomato or potato? Fundamentally,
+``Mary ate the \_'' should semantically match any food item.
+
+Following this idea, we introduce generalization by shared hypernymy.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{k}{def} \PY{n+nf}{getSharedHypernyms}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}only use on Nouns}
+             \PY{n}{pairwise\PYZus{}synsets} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{a}\PY{p}{,}\PY{n}{b} \PY{o}{=} \PY{n}{filler\PYZus{}words}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{filler\PYZus{}words}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+                     \PY{n}{pairwise\PYZus{}synsets}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{findLowest}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+             \PY{k}{return} \PY{n+nb}{reduce}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{lowest\PYZus{}common\PYZus{}hypernyms}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{pairwise\PYZus{}synsets}\PY{p}{)}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{getEntailments}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}only use on Verbs}
+             \PY{n}{synsets} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{p}{[}\PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{filler\PYZus{}word}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{VERB}\PY{p}{)} \PY{k}{for} \PY{n}{filler\PYZus{}word} \PY{o+ow}{in} \PY{n}{filler\PYZus{}words}\PY{p}{]}\PY{p}{)}
+             \PY{n}{ents} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{syn}\PY{p}{:} \PY{n}{syn}\PY{o}{.}\PY{n}{entailments}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{synsets}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{flatten}\PY{p}{(}\PY{p}{[}\PY{n}{ent}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{ent} \PY{o+ow}{in} \PY{n}{ents}\PY{p}{]}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{getSharedHypernymsOrEntailments}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{POS}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{getSharedHypernyms}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}
+             \PY{k}{elif} \PY{n}{POS}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{getEntailments}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}
+             \PY{k}{return} \PY{n}{getSharedHypernyms}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)} \PY{c+c1}{\PYZsh{}future work}
+         
+         \PY{k}{def} \PY{n+nf}{findLowest}\PY{p}{(}\PY{n}{w1}\PY{p}{,} \PY{n}{w2}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}only use on Nouns}
+             \PY{n}{a}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{w1}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{NOUN}\PY{p}{)}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{synsets}\PY{p}{(}\PY{n}{w2}\PY{p}{,} \PY{n}{wn}\PY{o}{.}\PY{n}{NOUN}\PY{p}{)}
+                 
+             \PY{n}{low\PYZus{}depth}\PY{p}{,} \PY{n}{low\PYZus{}synset} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n+nb}{float}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n+nb+bp}{None}
+             \PY{n}{curr\PYZus{}x}\PY{p}{,} \PY{n}{curr\PYZus{}y} \PY{o}{=} \PY{n+nb+bp}{None}\PY{p}{,} \PY{n+nb+bp}{None}
+             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{a}\PY{p}{:}
+                     \PY{k}{for} \PY{n}{y} \PY{o+ow}{in} \PY{n}{b}\PY{p}{:}
+                             \PY{n}{syns} \PY{o}{=} \PY{n}{x}\PY{o}{.}\PY{n}{lowest\PYZus{}common\PYZus{}hypernyms}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+                             \PY{k}{if} \PY{n}{syns}\PY{p}{:}
+                                 \PY{n}{depth} \PY{o}{=} \PY{n}{syns}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{min\PYZus{}depth}\PY{p}{(}\PY{p}{)}
+                                 \PY{k}{if} \PY{p}{(}\PY{n}{depth} \PY{o+ow}{and} \PY{n}{depth} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{low\PYZus{}depth}\PY{p}{)}\PY{p}{:}
+                                         \PY{n}{low\PYZus{}depth} \PY{o}{=} \PY{n}{depth}
+                                         \PY{n}{low\PYZus{}synset} \PY{o}{=} \PY{n}{syns}
+                                         \PY{n}{curr\PYZus{}x}\PY{p}{,} \PY{n}{curr\PYZus{}y} \PY{o}{=} \PY{n}{x}\PY{p}{,} \PY{n}{y}
+             \PY{k}{return} \PY{n}{low\PYZus{}synset}
+         
+         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary eats the \PYZus{}}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+         \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSharedHypernymsOrEntailments}\PY{p}{)}
+         
+         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary \PYZus{} the tomato}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+         \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getSharedHypernymsOrEntailments}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}25}]:} []
+\end{Verbatim}
+            
+    These generalizations are good, but do not cover very much ground. We
+are trying to create a long list of viable alternatively for a blank
+spot, and this method took us from two hypotheses to two hypotheses. We
+can ameliorate this by taking the transitive closure of hyponymy under
+these objects. Such a closure would be a generalization of each of our
+previous generalizations in this paper.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{k}{def} \PY{n+nf}{getHyponymClosure}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}Noun}
+             \PY{n}{pairwise\PYZus{}synsets} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{a}\PY{p}{,}\PY{n}{b} \PY{o}{=} \PY{n}{filler\PYZus{}words}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{filler\PYZus{}words}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+                     \PY{n}{pairwise\PYZus{}synsets}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{findLowest}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+             \PY{n}{hypernym\PYZus{}synset} \PY{o}{=} \PY{n+nb}{reduce}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{lowest\PYZus{}common\PYZus{}hypernyms}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{pairwise\PYZus{}synsets}\PY{p}{)}
+             \PY{n}{closure} \PY{o}{=} \PY{n}{flatten}\PY{p}{(}\PY{n}{hypernym\PYZus{}synset}\PY{o}{.}\PY{n}{closure}\PY{p}{(}\PY{k}{lambda} \PY{n}{y}\PY{p}{:} \PY{n}{y}\PY{o}{.}\PY{n}{hyponyms}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{flatten}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{lemma\PYZus{}names}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{closure}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{getHyponymsClosureOrEntailments}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{,} \PY{n}{POS}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{POS} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{getHyponymClosure}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}
+             \PY{k}{elif} \PY{n}{POS}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{getEntailments}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)}
+             \PY{k}{return} \PY{n}{getHyponymClosure}\PY{p}{(}\PY{n}{filler\PYZus{}words}\PY{p}{)} \PY{c+c1}{\PYZsh{}future work}
+         
+         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary eats the \PYZus{}}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+         \PY{n}{hyponym\PYZus{}closure} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getHyponymsClosureOrEntailments}\PY{p}{)}
+         \PY{k}{print} \PY{n}{hyponym\PYZus{}closure}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+         
+         \PY{n}{gap\PYZus{}sentence} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mary \PYZus{} the tomato}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+         \PY{n}{hyponym\PYZus{}closure} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{getHyponymsClosureOrEntailments}\PY{p}{)}
+         \PY{k}{print} \PY{n}{hyponym\PYZus{}closure}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['aquatic\_plant', 'water\_plant', 'hydrophyte', 'hydrophytic\_plant', 'bulbous\_plant', 'cormous\_plant', 'cultivar', 'cultivated\_plant', 'deciduous\_plant', 'desert\_plant']
+[]
+
+    \end{Verbatim}
+
+    Hyponym closure of shared hyponyms works very well for nouns. However,
+when we apply the same technique on verbs, we find that many times there
+are no hypernyms. We may choose to be selective -- using hyponym closure
+for nouns and entailment for verbs.
+
+We can fill the currently unused word\_type argument of
+getHyponymClosure to implement differening generalization behavior based
+on the type of word.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{training\PYZus{}sentences\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input/training.txt}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{gap\PYZus{}sentences\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input/testing.txt}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{output\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Output/}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{training\PYZus{}sentences\PYZus{}file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+             \PY{n}{training\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{f}\PY{p}{]}
+         \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{gap\PYZus{}sentences\PYZus{}file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+             \PY{n}{gap\PYZus{}sentences} \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{f}\PY{p}{]}
+         
+         
+         \PY{n}{sem} \PY{o}{=} \PY{n}{semantic\PYZus{}rule\PYZus{}set}\PY{o}{.}\PY{n}{SemanticRuleSet}\PY{p}{(}\PY{p}{)}
+         \PY{n}{sem} \PY{o}{=} \PY{n}{rules}\PY{o}{.}\PY{n}{addLexicon}\PY{p}{(}\PY{n}{sem}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{fillInTheGaps}\PY{p}{(}\PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{gap\PYZus{}sentences}\PY{p}{,} \PY{n}{groupingProcedure}\PY{p}{,} \PY{n}{generalizationProcedure}\PY{p}{)}\PY{p}{:}
+             \PY{n}{event\PYZus{}groupings} \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{groupingProcedure}\PY{p}{)}
+             \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{output\PYZus{}dir}\PY{o}{+}\PY{n}{groupingProcedure}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}}\PY{o}{+}\PY{n}{generalizationProcedure}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}}\PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{gap\PYZus{}sentence} \PY{o+ow}{in} \PY{n}{gap\PYZus{}sentences}\PY{p}{:}
+                     \PY{n}{filler\PYZus{}word\PYZus{}guesses} \PY{o}{=} \PY{n}{gapSentenceToFillerWordGuesses}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{event\PYZus{}groupings}\PY{p}{)}
+                     \PY{n}{gens} \PY{o}{=} \PY{n}{generalizeAndConjugate}\PY{p}{(}\PY{n}{sem}\PY{p}{,} \PY{n}{gap\PYZus{}sentence}\PY{p}{,} \PY{n}{filler\PYZus{}word\PYZus{}guesses}\PY{p}{,} \PY{n}{generalizationProcedure}\PY{p}{)}
+                     \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{gens}\PY{p}{:}
+                         \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{gap\PYZus{}sentence}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{g}\PY{p}{)}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{fillInTheGaps}\PY{p}{(}\PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{gap\PYZus{}sentences}\PY{p}{,} \PY{n}{groupIfOneDiff}\PY{p}{,} \PY{n}{getSynonyms}\PY{p}{)}
+         \PY{n}{fillInTheGaps}\PY{p}{(}\PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{gap\PYZus{}sentences}\PY{p}{,} \PY{n}{groupIfOneOrTwoDiffs}\PY{p}{,} \PY{n}{getSynonyms}\PY{p}{)}
+         \PY{n}{fillInTheGaps}\PY{p}{(}\PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{gap\PYZus{}sentences}\PY{p}{,} \PY{n}{groupIfOneDiff}\PY{p}{,} \PY{n}{getHyponymsClosureOrEntailments}\PY{p}{)}
+         \PY{n}{fillInTheGaps}\PY{p}{(}\PY{n}{training\PYZus{}sentences}\PY{p}{,} \PY{n}{gap\PYZus{}sentences}\PY{p}{,} \PY{n}{groupIfOneOrTwoDiffs}\PY{p}{,} \PY{n}{getHyponymsClosureOrEntailments}\PY{p}{)}
+\end{Verbatim}
+
+
+    Looking forward: 1. Grouping procedures that use synsets during the
+iterative grouping. 2. Grouping procedures that only group according to
+n/log(n) rule 3. Extending supported parts of speech 4. Make faster --
+currently very inefficient
+
+    Assumptions/Limitations: 1. Can currently only replace nouns or verbs
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

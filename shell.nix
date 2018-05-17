@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
     python27Packages.jupyter
     python27Packages.matplotlib
     python27Packages.ipywidgets
+    pandoc
   ];
 }
 
