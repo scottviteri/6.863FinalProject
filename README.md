@@ -3,6 +3,8 @@
 Requirements in shell.nix
 
 To get started:
-``` nix-shell
-``` jupyter-notebook FillInTheGaps.ipynb
+```
+nix-shell
+jupyter-notebook FillInTheGaps.ipynb
+```
 
