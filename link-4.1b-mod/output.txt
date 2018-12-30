@@ -1,7 +1,3 @@
-Mary chucks the tomato
-
-Mary eats the tomato
-
 Mary eats the tomato
 
 Mary eats the tomato
@@ -19,10 +15,6 @@ Mary depletes the tomato
 Mary exhausts the tomato
 
 Mary corrodes the tomato
-
-Mary eats the tomato
-
-Mary chucks the tomato
 
 Mary eats the tomato
 

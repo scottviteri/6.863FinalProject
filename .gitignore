@@ -3,3 +3,4 @@
 *.swo
 ./link-4.1b-mod/output.txt
 ./link-4.1b-mod/input.txt
+./link-4.1b-mod/obj/*
